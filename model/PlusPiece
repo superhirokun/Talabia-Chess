@@ -12,11 +12,9 @@ public class PlusPiece extends ChessPiece {
 
     public void checkValidMove(String targetRow, String targetColumn) {
         // Implement the logic for CheckValidMove
-        return false;
     }
 
     public void checkBlock(String targetRow, String targetColumn) {
         // Implement the logic for CheckBlock
-        return false;
     }
 }
