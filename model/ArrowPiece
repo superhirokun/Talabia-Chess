@@ -10,11 +10,17 @@ public class ArrowPiece extends ChessPiece {
         this.position = position;
     }
 
+    public boolean checkEnd(String position){
+        // Implement the logic for checkEnd
+        return false;
+    }
+
     public void checkValidMove(String targetRow, String targetColumn) {
         // Implement the logic for CheckValidMove
     }
 
-    public void checkBlock(String targetRow, String targetColumn) {
+    public boolean checkBlock(String currentRow, String currentColumn, String targetRow, String targetColumn, String colour) {
         // Implement the logic for CheckBlock
-    }
+
+        return true;
 }
