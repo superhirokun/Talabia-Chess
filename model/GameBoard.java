@@ -6,6 +6,7 @@ public class GameBoard{
 
     public GameBoard(){
         this.board = new String[7][6];
+        initializeBoard();
     }
 
     //Setter
@@ -17,9 +18,18 @@ public class GameBoard{
         //Initialize the board
         for(int i = 0; i < 7; i++){
             for(int j = 0; j < 6; j++){
-                this.board[i][j] = letters[i] + Integer.toString(j);
+                this.board[i][j] = letters[j] + Integer.toString(7-i);
             }
         }
+        //Testing
+        System.out.println("Board initialized");
+        for(int i = 0; i < 7; i++){
+            for(int j = 0; j < 6; j++){
+                System.out.print(this.board[i][j] + " ");
+            }
+            System.out.println();
+        }
+
     }
 
     //Getter
@@ -42,6 +52,11 @@ public class GameBoard{
 
     public void reset(){
         //Reset the board
+    }
+
+    public static void main(String[] args){
+        GameBoard board = new GameBoard();
+        System.out.println(board.getBoard());
     }
 
 
