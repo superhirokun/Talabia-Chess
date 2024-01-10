@@ -1,32 +1,38 @@
 package model;
 
 public class GameBoard{
-    private ChessPiece[][] board;
+    private String[][] board;
+    private char[] letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g'};
 
     public GameBoard(){
-        this.board = new ChessPiece[7][6];
+        this.board = new String[7][6];
     }
 
     //Setter
-    public ChessPiece setPiece(ChessPiece piece, int x, int y){
-        return this.board[x][y] = piece;
-    }
-
-    public void setBoard(ChessPiece[][] board){
+    public void setBoard(String[][] board){
         this.board = board;
     }
 
-    //Getter
-    public ChessPiece getPiece(int x, int y){
-        return this.board[x][y];
+    private void initializeBoard(){
+        //Initialize the board
+        for(int i = 0; i < 7; i++){
+            for(int j = 0; j < 6; j++){
+                this.board[i][j] = letters[i] + Integer.toString(j);
+            }
+        }
     }
 
-    public ChessPiece[][] getBoard(){
+    //Getter
+    public String[][] getBoard(){
         return this.board;
     }
 
+    public char[] lettersGetter(){
+        return this.letters;
+    }
+
     //Place and remove piece
-    public void placePiece(ChessPiece piece, int x, int y){
+    public void placePiece(String piece, int x, int y){
         this.board[x][y] = piece;
     }
 
