@@ -3,13 +3,15 @@ package model;
 public abstract class ChessPiece {
     private String row;
     private String column;
-    private String[] colour = {"black","yellow"};
+    private String pieceName;
+    private String colour;
     private int turn;
     private boolean pieceSwitch;
     private boolean captured;
     private String position;
 
-    public ChessPiece(String row, String column, String[] colour, int turn, boolean pieceSwitch) {
+    public ChessPiece(String row, String column, String colour, int turn, boolean pieceSwitch, String pieceName) {
+        this.pieceName = pieceName;
         this.row = row;
         this.column = column;
         this.colour = colour;
@@ -18,8 +20,8 @@ public abstract class ChessPiece {
         this.captured = false;
     }
 
-    public String getColour(Integer colo){
-        return this.colour[colo];
+    public String getColour(){
+        return this.colour;
     }
 
     public void pieceCount() {
@@ -30,4 +32,5 @@ public abstract class ChessPiece {
     public void pieceSwitch() {
         // Include logic for pieceSwitch, basically switch time and plus every 2 rounds
     }
+
 }

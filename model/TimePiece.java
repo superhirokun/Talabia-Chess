@@ -4,8 +4,8 @@ public class TimePiece extends ChessPiece {
     private boolean captured;
     private String position;
 
-    public TimePiece(String row, String column, String[] colour, int turn, boolean pieceSwitch, String position) {
-        super(row, column, colour, turn, pieceSwitch);
+    public TimePiece(String row, String column, String colour, int turn, boolean pieceSwitch, String position, String pieceName) {
+        super(row, column, colour, turn, pieceSwitch, pieceName);
         this.captured = false;
         this.position = position;
     }
