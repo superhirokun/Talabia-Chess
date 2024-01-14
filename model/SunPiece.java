@@ -1,9 +1,9 @@
 package model;
 
-public class TimePiece extends ChessPiece{
+public class SunPiece extends ChessPiece{
 
-    TimePiece( Color color, int position) {
-        super(PieceType.TIME, color, position, false);
+    SunPiece( Color color, int position) {
+        super(PieceType.SUN, color, position, false);
         //TODO Auto-generated constructor stub
     }
     

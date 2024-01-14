@@ -1,36 +1,56 @@
 package model;
 
 public abstract class ChessPiece {
-    private String row;
-    private String column;
-    private String pieceName;
-    private String colour;
-    private int turn;
-    private boolean pieceSwitch;
-    private boolean captured;
-    private String position;
-
-    public ChessPiece(String row, String column, String colour, int turn, boolean pieceSwitch, String pieceName) {
-        this.pieceName = pieceName;
-        this.row = row;
-        this.column = column;
-        this.colour = colour;
-        this.turn = turn;
-        this.pieceSwitch = pieceSwitch;
-        this.captured = false;
+    protected Color color;
+    protected PieceType pieceType;
+    protected int position;
+    protected boolean isCaptured;
+    
+    ChessPiece(PieceType pieceType, Color color,int position, boolean isCaptured) {
+        this.pieceType = pieceType;
+        this.position = position;
+        this.color = color;
+        this.isCaptured = isCaptured;
     }
 
-    public String getColour(){
-        return this.colour;
+    public int getPosition() {
+        return this.position;
     }
 
-    public void pieceCount() {
-        // Include logic for pieceCount, aka check how many pieces are there on the board left
-        int pieceCount;
+    public Color getColor() {
+        return this.color;
     }
 
-    public void pieceSwitch() {
-        // Include logic for pieceSwitch, basically switch time and plus every 2 rounds
+    public PieceType getPieceType() {
+        return this.pieceType;
+    }
+
+    @Override
+    public String toString() {
+        if (this.getColor().isBlue()) {
+            return this.pieceType.toString().toLowerCase();
+        } else {
+            return this.pieceType.toString();
+        }
+    }
+
+    public enum PieceType {
+        PLUS("L"), 
+        HOURGLASS("H"), 
+        TIME("T"), 
+        SUN("S"),
+        POINT("P");
+    
+        private String pieceType;
+    
+        PieceType(String pieceType) {
+            this.pieceType = pieceType;
+        }
+    
+        @Override
+        public String toString() {
+            return this.pieceType;
+        }
     }
 
 }
