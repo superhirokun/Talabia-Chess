@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class PointPiece extends ChessPiece{
 
     protected final static int[] offsetValues = {7, 14};   //the offset of the pieces 
+    protected int destination;
 
     PointPiece(Color color, int position) {
         super(PieceType.POINT, color, position, false, false);
@@ -18,7 +19,6 @@ public class PointPiece extends ChessPiece{
      * @return an ArrayList of integers representing the valid move positions
      */
     public ArrayList<Integer> ValidMoves(GameBoard gameBoard){
-        int destination;
         ArrayList<Integer> validMoves = new ArrayList<Integer>();
         for (int offset : offsetValues) {
             if(isEnd==false){

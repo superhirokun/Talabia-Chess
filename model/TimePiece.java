@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class TimePiece extends ChessPiece{
 
     protected final static int[] offsetValues = {-8, -6, 6, 8};
+    protected int destination;
 
     TimePiece( Color color, int position) {
         super(PieceType.TIME, color, position, false);
@@ -18,7 +19,6 @@ public class TimePiece extends ChessPiece{
      * @return an ArrayList of integers representing the valid move positions
      */
     public ArrayList<Integer> ValidMoves(GameBoard gameBoard){
-        int destination;
         ArrayList<Integer> validMoves = new ArrayList<Integer>();
 
         for (int offset : offsetValues) {

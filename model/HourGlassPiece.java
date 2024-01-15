@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class HourGlassPiece extends ChessPiece{
     
     protected final static int[] offsetValues = {-15, -13, -9, -5, 5, 9, 13, 15};    //all the possible valid move of the piece
+    protected int destination;
     
     HourGlassPiece(Color color, int position) {
         super(PieceType.HOURGLASS, color, position, false);
@@ -19,7 +20,6 @@ public class HourGlassPiece extends ChessPiece{
      */
     public ArrayList<Integer> ValidMoves(GameBoard gameBoard) {
         ArrayList<Integer> validMoves = new ArrayList<Integer>();
-        int destination;
         for (int offset : offsetValues) {
             destination = this.position + offset;
             if (FirstColumnOffsetKiller(this.position, offset) || 

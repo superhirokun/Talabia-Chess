@@ -3,6 +3,7 @@ import java.util.*;
 
 public class GameBoard {
     private final String[] board = new String[BoardLogic.totalSquare];
+    protected HashMap<Integer, ChessPiece> piecePosition;
     //the starting FEN for the game
     protected final String StartingFEN = "lhtsthl/ppppppp/7/7/PPPPPPP/LHTSTHL y 1";    /*the first part b4 the space is the position of the piece on the board, 
                                                                                             the y is the yellow player's turn, the 1 is the number of turns*/
@@ -11,6 +12,7 @@ public class GameBoard {
     
     
     public GameBoard(BobTheBuilder builder){
+        this.piecePosition = builder.piecePosition;
         this.zaBluePiecesOnZaBoard = new ArrayList<ChessPiece>();
         this.zaYellowPiecesOnZaBoard = new ArrayList<ChessPiece>();
     }
@@ -75,6 +77,17 @@ public class GameBoard {
     public String[] getBoard(){
         return this.board;
     }
+
+    public String getBoardCoordinates(int position){
+        return this.board[position];
+    }
+
+    public ChessPiece getPiece(int position){
+        return this.piecePosition.get(position);
+    }
+
+
+
     
     //for testing
 
@@ -91,6 +104,7 @@ public class GameBoard {
     //Builder
     public static class BobTheBuilder{
         String[] bobsBoard;
+        HashMap<Integer, ChessPiece> piecePosition;
         public BobTheBuilder(){
             this.bobsBoard = new String[BoardLogic.totalSquare];
             
@@ -99,8 +113,10 @@ public class GameBoard {
         public BobTheBuilder placePiece(ChessPiece piece, int position){
             if (piece != null) {
                 this.bobsBoard[piece.getPosition()] = piece.toString();
+                this.piecePosition.put(piece.getPosition(), piece);
             } else {
                 this.bobsBoard[position] = "-";
+
             }
             return this;
         }

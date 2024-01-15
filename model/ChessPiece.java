@@ -48,6 +48,10 @@ public abstract class ChessPiece {
         return this.pieceType;
     }
 
+    public ChessPiece getPiece() {
+        return this;
+    }
+
     @Override
     public String toString() {
         if (this.getColor().isBlue()) {
