@@ -1,10 +1,13 @@
 package model;
 
+import java.util.ArrayList;
+
 public abstract class ChessPiece {
     protected Color color;
     protected PieceType pieceType;
     protected int position;
     protected boolean isCaptured;
+    protected boolean isEnd;
     
     ChessPiece(PieceType pieceType, Color color,int position, boolean isCaptured) {
         this.pieceType = pieceType;
@@ -13,6 +16,26 @@ public abstract class ChessPiece {
         this.isCaptured = isCaptured;
     }
 
+    ChessPiece(PieceType pieceType, Color color,int position, boolean isCaptured, boolean isEnd) { //this is for the point piece
+        this.pieceType = pieceType;
+        this.position = position;
+        this.color = color;
+        this.isCaptured = isCaptured;
+        this.isEnd = isEnd;
+    }
+
+    public abstract ArrayList<Integer> ValidMoves(GameBoard gameBoard); //An arraylist of all the valid moves of the piece
+
+    //Setter
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public void setCaptured(boolean isCaptured) {
+        this.isCaptured = isCaptured;
+    }
+    
+    //Getter
     public int getPosition() {
         return this.position;
     }

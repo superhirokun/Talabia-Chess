@@ -1,11 +1,42 @@
 package model;
 
+import java.util.ArrayList;
+
 public class PointPiece extends ChessPiece{
 
+    protected final static int[] offsetValues = {7, 14};   //the offset of the pieces 
+
     PointPiece(Color color, int position) {
-        super(PieceType.POINT, color, position, false);
-        //TODO Auto-generated constructor stub
+        super(PieceType.POINT, color, position, false, false);
+        
     }
+
+    /**
+     * Calculates the valid moves for the current PointPiece on the given GameBoard.
+     * 
+     * @param gameBoard the GameBoard on which the PointPiece is placed
+     * @return an ArrayList of integers representing the valid move positions
+     */
+    public ArrayList<Integer> ValidMoves(GameBoard gameBoard){
+        int destination;
+        ArrayList<Integer> validMoves = new ArrayList<Integer>();
+        for (int offset : offsetValues) {
+            if(isEnd==false){
+                destination = this.position + (this.color.direaction()* offset);
+            }else if(isEnd==true){
+                destination = this.position + (this.color.oppositeDirection()* offset);
+            }
+            
+            if (BoardLogic.isValidSquareCoordinate(destination)) {
+                if (gameBoard.getPiece(destination) == null) {
+                    validMoves.add(destination);
+                } else if (gameBoard.getPiece(destination).getColor() != this.color) {
+                    validMoves.add(destination);
+                }
+            }
+        }
+        return validMoves;
+    };
     
 
     @Override
