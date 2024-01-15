@@ -1,4 +1,7 @@
 package model;
+import java.util.*;
+
+import model.GameBoard.BobTheBuilder;
 
 public class BoardLogic {
 
@@ -9,6 +12,8 @@ public class BoardLogic {
     public static boolean[] SecondColumn = intializedColumn(1);   //the second column of the board
     public static boolean[] SixthColumn = intializedColumn(5);    //the sixth column of the board
     public static boolean[] SeventhColumn = intializedColumn(6);  //the seventh column of the board
+
+    protected static HashMap<Integer,ChessPiece> targetPiece;
 
     //create a boolean array that represent a column on the board and set the column to true and the rest to false
     private static boolean[] intializedColumn(int Column){  
@@ -22,6 +27,15 @@ public class BoardLogic {
 
     public static boolean isValidSquareCoordinate(int coordinate){    //check if the coordinate given is out of bound
         return coordinate >= 0 && coordinate < totalSquare;
+    }
+
+    public static boolean isValidMove(int currentPosition, int destination, ArrayList<Integer> validMoves){   //check if the move is valid
+        return validMoves.contains(destination);
+    }
+    /*TODO: do a for loop for every piece in the allThePiece and compare the position of the piece that being moved
+     to it original position, if the position is the same then set the piece to the new position or get the position from the piece*/
+    public static GameBoard makeMove(int currentPosition, int destination, BobTheBuilder builder){   //make the move
+        return null;
     }
 
     /**
@@ -76,4 +90,10 @@ public class BoardLogic {
         String zaTurn = zaFEN.split(" ")[2];
         return Integer.parseInt(zaTurn);
     }
+
+    //Setter
+    public static void setTargetPiece(ChessPiece targetPiece, int position){
+        targetPiece.put(position, targetPiece);
+    }
+    
 }

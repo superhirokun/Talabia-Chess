@@ -8,7 +8,8 @@ public abstract class ChessPiece {
     protected int position;
     protected boolean isCaptured;
     protected boolean isEnd;
-    
+    //TODO: add a method to set the isEnd to true when the pointPiece reach the end of the board
+    //TODO: add a method to set the isCaptured to true when the pointPiece is captured
     ChessPiece(PieceType pieceType, Color color,int position, boolean isCaptured) {
         this.pieceType = pieceType;
         this.position = position;
@@ -78,6 +79,11 @@ public abstract class ChessPiece {
         public String toString() {
             return this.pieceType;
         }
+    }
+
+    public void put(int position2, ChessPiece targetPiece) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'put'");
     }
 
 }

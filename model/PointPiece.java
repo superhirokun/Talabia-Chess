@@ -32,6 +32,7 @@ public class PointPiece extends ChessPiece{
                     validMoves.add(destination);
                 } else if (gameBoard.getPiece(destination).getColor() != this.color) {
                     validMoves.add(destination);
+                    BoardLogic.setTargetPiece(gameBoard.getPiece(destination), destination);
                 }
             }
         }
