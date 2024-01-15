@@ -17,6 +17,7 @@ public class HourGlassPiece extends ChessPiece{
      * 
      * @param gameBoard the game board on which the piece is placed
      * @return an ArrayList of integers representing the valid move positions
+     * Tested
      */
     public ArrayList<Integer> ValidMoves(GameBoard gameBoard) {
         ArrayList<Integer> validMoves = new ArrayList<Integer>();
