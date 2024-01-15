@@ -29,13 +29,29 @@ public class BoardLogic {
         return coordinate >= 0 && coordinate < totalSquare;
     }
 
-    public static boolean isValidMove(int currentPosition, int destination, ArrayList<Integer> validMoves){   //check if the move is valid
+    public static boolean isValidMove(int destination, ArrayList<Integer> validMoves){   //check if the move is valid
         return validMoves.contains(destination);
     }
     /*TODO: do a for loop for every piece in the allThePiece and compare the position of the piece that being moved
-     to it original position, if the position is the same then set the piece to the new position or get the position from the piece*/
-    public static GameBoard makeMove(int currentPosition, int destination, BobTheBuilder builder){   //make the move
-        return null;
+     to it original position, if the position is the same then set the piece to the new position or get the position from the piece
+     TODO: need to set the position to the new selected position in the prev method that will call this method also and if the destination position
+     have an enemy piece set the enemy piece getCapture to false*/
+    public static GameBoard makeMove(ChessPiece piece, int intialPosition, BobTheBuilder builder, GameBoard gamer){   //make the move
+        int currentPosition = piece.getPosition();
+        HashMap<Integer, ChessPiece> newPiecePosition = new HashMap<>();
+        newPiecePosition = gamer.getAllThePiece();
+        for(int i = 0; i < totalSquare; i++){
+            if(newPiecePosition.get(i) != null){
+                if(newPiecePosition.get(i).getPosition() == currentPosition){
+                    builder.piecePosition.get(i).setPosition(intialPosition);
+                    builder.piecePosition.put(intialPosition, newPiecePosition.get(i));
+                }else{
+                    builder.piecePosition.put(i, newPiecePosition.get(i));
+                }
+            }
+        }
+        
+        return builder.build();
     }
 
     /**

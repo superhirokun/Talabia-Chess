@@ -25,9 +25,7 @@ public class GameBoard {
     public void zaStarter(BobTheBuilder builder){
         boardSetting(builder,BoardLogic.zaFENDecoder(StartingFEN));
         boardCreator(builder);
-        displayBoard();
-        
-        
+        displayBoard();   
     }
 
     //Method
