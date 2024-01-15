@@ -26,7 +26,9 @@ public class PlusPiece extends ChessPiece{
                 SeventhColumnOffsetKiller(this.position, offset)) {
                     break;
                 }
-                if((offset == 1 || offset == -1) && destination%7 == 0){
+                if(offset == 1 && destination%7 == 0){
+                    break;
+                }else if(offset == -1 && (destination+1)%7 == 0){
                     break;
                 }
                 if (BoardLogic.isValidSquareCoordinate(destination)) {

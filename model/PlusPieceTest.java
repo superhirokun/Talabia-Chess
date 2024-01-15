@@ -17,7 +17,7 @@ public class PlusPieceTest {
         GameBoard gameBoard = new GameBoard(builder);
         
         // Create a white PlusPiece at position 28
-        PlusPiece plusPiece = new PlusPiece(Color.Yellow, 28);
+        PlusPiece plusPiece = new PlusPiece(Color.Yellow, 14);
         
         // Add the white PlusPiece to the game board
         builder.placePiece(plusPiece, 28);
@@ -27,17 +27,16 @@ public class PlusPieceTest {
         
         // Assert that the valid moves are as expected
         ArrayList<Integer> expectedValidMoves = new ArrayList<>();
-        expectedValidMoves.add(0);
-        expectedValidMoves.add(7);
+        expectedValidMoves.add(13);
+        expectedValidMoves.add(6);
+        expectedValidMoves.add(19);
+        expectedValidMoves.add(18);
+        expectedValidMoves.add(17);
+        expectedValidMoves.add(16);
+        expectedValidMoves.add(15);
         expectedValidMoves.add(14);
-        expectedValidMoves.add(21);
-        expectedValidMoves.add(29);
-        expectedValidMoves.add(30);
-        expectedValidMoves.add(31);
-        expectedValidMoves.add(32);
-        expectedValidMoves.add(33);
         expectedValidMoves.add(34);
-        expectedValidMoves.add(35);
+        expectedValidMoves.add(41);
         assertEquals(expectedValidMoves, validMoves);
     }
     
