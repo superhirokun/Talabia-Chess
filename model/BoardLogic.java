@@ -68,22 +68,25 @@ public class BoardLogic {
         }
     }
 
-    /*TODO: do a for loop for every piece in the allThePiece and compare the position of the piece that being moved
-     to it original position, if the position is the same then set the piece to the new position or get the position from the piece
-     TODO: need to set the position to the new selected position in the prev method that will call this method also and if the destination position
-     have an enemy piece set the enemy piece getCapture to false*/
-    public static GameBoard makeMove(ChessPiece piece, int intialPosition, BobTheBuilder builder, GameBoard gamer){   //make the move
-        int currentPosition = piece.getPosition();
-        HashMap<Integer, ChessPiece> newPiecePosition = new HashMap<>();
-        newPiecePosition = gamer.getAllThePiece();
+
+    /*Should work further testing neeeded*/
+    public static GameBoard makeMove(ChessPiece piece, int destination, GameBoard gamer){   //make the move
+        BobTheBuilder builder = new BobTheBuilder();
+        int initialPosition = piece.getPosition();
+        HashMap<Integer, ChessPiece> prevPiecePosition = new HashMap<>();
+        prevPiecePosition = gamer.getAllThePiece();  //get the previous position of the piece
         for(int i = 0; i < totalSquare; i++){
-            if(newPiecePosition.get(i) != null){
-                if(newPiecePosition.get(i).getPosition() == currentPosition){
-                    builder.piecePosition.get(i).setPosition(intialPosition);
-                    builder.piecePosition.put(intialPosition, newPiecePosition.get(i));
-                }else{
-                    builder.piecePosition.put(i, newPiecePosition.get(i));
-                }
+           if(prevPiecePosition.get(i) != null){    //check if the piece is not null
+               if(prevPiecePosition.get(i).getPosition() == initialPosition){
+                   prevPiecePosition.get(i).setPosition(destination);   //set the position of the piece to the new position which is the destination
+                   builder.placePiece(prevPiecePosition.get(i), destination);
+               }else if(prevPiecePosition.get(i).getPosition() == destination && prevPiecePosition.get(i).getCaptured() == true){   //check if the piece is captured
+                   continue;
+               }else{
+                   builder.placePiece(prevPiecePosition.get(i), i);   //if the piece is not the piece that is moving then place the piece at the same position
+               }
+            }else{
+                builder.placePiece(null, i);    //if the piece is null then place a null piece
             }
         }
         
