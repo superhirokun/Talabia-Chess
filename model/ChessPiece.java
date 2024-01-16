@@ -7,7 +7,6 @@ public abstract class ChessPiece {
     protected PieceType pieceType;
     protected int position;
     protected boolean isCaptured;
-    protected boolean isEnd;
     //TODO: add a method to set the isEnd to true when the pointPiece reach the end of the board
     //TODO: add a method to set the isCaptured to true when the pointPiece is captured
     ChessPiece(PieceType pieceType, Color color,int position, boolean isCaptured) {
@@ -15,14 +14,6 @@ public abstract class ChessPiece {
         this.position = position;
         this.color = color;
         this.isCaptured = isCaptured;
-    }
-
-    ChessPiece(PieceType pieceType, Color color,int position, boolean isCaptured, boolean isEnd) { //this is for the point piece
-        this.pieceType = pieceType;
-        this.position = position;
-        this.color = color;
-        this.isCaptured = isCaptured;
-        this.isEnd = isEnd;
     }
 
     public abstract ArrayList<Integer> ValidMoves(GameBoard gameBoard); //An arraylist of all the valid moves of the piece
@@ -53,6 +44,10 @@ public abstract class ChessPiece {
         return this;
     }
 
+    public boolean getCaptured() {
+        return this.isCaptured;
+    }
+
     @Override
     public String toString() {
         if (this.getColor().isBlue()) {
@@ -81,9 +76,6 @@ public abstract class ChessPiece {
         }
     }
 
-    public void put(int position2, ChessPiece targetPiece) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'put'");
-    }
+    
 
 }

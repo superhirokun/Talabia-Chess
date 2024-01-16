@@ -129,7 +129,7 @@ public class GameBoard {
 
     public void displayBoard(){ // Display ZA BOARDO
         for(int i = 0; i < BoardLogic.totalSquare; i++){
-            if(i % BoardLogic.totalColumn == 0){
+            if(i % BoardLogic.numOfSquarePerRow == 0){
                 System.out.println();
             }
             System.out.print(this.board[i] + " ");
