@@ -10,6 +10,9 @@ public class GameBoard {
     private HashMap<Integer, ChessPiece> bluePiece;
     private HashMap<Integer, ChessPiece> yellowPiece;
     private HashMap<Integer, ChessPiece> allThePiece;
+
+     HashMap<Integer, ChessPiece> plusPiece;
+     HashMap<Integer, ChessPiece> timePiece;
     
     
     public GameBoard(BobTheBuilder builder){
@@ -17,6 +20,8 @@ public class GameBoard {
         this.bluePiece = new HashMap<Integer, ChessPiece>();
         this.yellowPiece = new HashMap<Integer, ChessPiece>();
         this.allThePiece = new HashMap<Integer, ChessPiece>();
+        plusPiece = new HashMap<Integer, ChessPiece>();
+        timePiece = new HashMap<Integer, ChessPiece>();
         this.bluePiece = colorPieceOnBoard(Color.Blue, builder);
         this.yellowPiece = colorPieceOnBoard(Color.Yellow, builder);
         this.allThePiece = allPiecesOnBoard(builder);
@@ -29,17 +34,19 @@ public class GameBoard {
     }
 
     //Method
-    public static GameBoard boardSetting(BobTheBuilder builder, String[] zaFEN){
+    public GameBoard boardSetting(BobTheBuilder builder, String[] zaFEN){
         for(int i = 0; i < BoardLogic.totalSquare; i++){
             switch (zaFEN[i]) {
                 case "l":
                 builder.placePiece(new PlusPiece(Color.Blue, i), i);
+                plusPiece.put(i, new PlusPiece(Color.Blue, i));
                 break;
             case "h":
                 builder.placePiece(new HourGlassPiece(Color.Blue, i), i);
                 break;
             case "t":
                 builder.placePiece(new TimePiece(Color.Blue, i), i);
+                timePiece.put(i, new TimePiece(Color.Blue, i));
                 break;
             case "s":
                 builder.placePiece(new SunPiece(Color.Blue, i), i);
@@ -49,12 +56,14 @@ public class GameBoard {
                 break;
             case "L":
                 builder.placePiece(new PlusPiece(Color.Yellow, i), i);
+                plusPiece.put(i, new PlusPiece(Color.Yellow, i));
                 break;
             case "H":
                 builder.placePiece(new HourGlassPiece(Color.Yellow, i), i);
                 break;
             case "T":
                 builder.placePiece(new TimePiece(Color.Yellow, i), i);
+                timePiece.put(i, new TimePiece(Color.Yellow, i));
                 break;
             case "S":
                 builder.placePiece(new SunPiece(Color.Yellow, i), i);

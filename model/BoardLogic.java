@@ -82,7 +82,14 @@ public class BoardLogic {
                    builder.placePiece(prevPiecePosition.get(i), destination);
                }else if(prevPiecePosition.get(i).getPosition() == destination && prevPiecePosition.get(i).getCaptured() == true){   //check if the piece is captured
                    continue;
-               }else{
+               }else if(canSwitch == true){     //switch the time piece with the plus piece when the turn is even
+                    if(prevPiecePosition.get(i) == gamer.plusPiece.get(i)){
+                        builder.placePiece(new TimePiece(gamer.plusPiece.get(i).getColor(), i), i);
+                    }else if(prevPiecePosition.get(i) == gamer.timePiece.get(i)){
+                        builder.placePiece(new PlusPiece(gamer.timePiece.get(i).getColor(), i), i);
+                    }
+               }
+               else{
                    builder.placePiece(prevPiecePosition.get(i), i);   //if the piece is not the piece that is moving then place the piece at the same position
                }
             }else{
