@@ -58,17 +58,44 @@ public abstract class ChessPiece {
     }
 
     public enum PieceType {
-        PLUS("L"), 
-        HOURGLASS("H"), 
-        TIME("T"), 
-        SUN("S"),
-        POINT("P");
+        PLUS("L") {
+            @Override
+            public boolean isSunPiece() {
+                return false;
+            }
+        }, 
+        HOURGLASS("H") {
+            @Override
+            public boolean isSunPiece() {
+                return false;
+            }
+        }, 
+        TIME("T") {
+            @Override
+            public boolean isSunPiece() {
+                return false;
+            }
+        }, 
+        SUN("S") {
+            @Override
+            public boolean isSunPiece() {
+                return true;
+            }
+        },
+        POINT("P") {
+            @Override
+            public boolean isSunPiece() {
+                return false;
+            }
+        };
     
         private String pieceType;
     
         PieceType(String pieceType) {
             this.pieceType = pieceType;
         }
+
+        public abstract boolean isSunPiece();
     
         @Override
         public String toString() {
