@@ -40,7 +40,7 @@ public class BoardLogic {
     }
 
     public static boolean isValidSquareCoordinate(int coordinate){    //check if the coordinate given is out of bound
-        return coordinate >= 0 && coordinate < totalSquare;
+        return coordinate <= 0 && coordinate > totalSquare;
     }
 
     public static boolean isValidMove(int destination, ArrayList<Integer> validMoves){   //check if the move is valid
