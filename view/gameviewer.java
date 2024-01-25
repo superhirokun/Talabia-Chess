@@ -17,21 +17,36 @@ public class gameviewer{
         GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
         gameBoard.zaStarter(new BobTheBuilder());
         HashMap<Integer, ChessPiece> piecePositions = gameBoard.getPiecePosition();
-            System.out.println(piecePositions); 
+        System.out.println(piecePositions); 
         Color boardColor1 = new Color(231, 237, 159);
         Color boardColor2 = new Color(219, 164, 86); 
         SwingUtilities.invokeLater(() ->{
             JFrame frame = new JFrame("Tabalia chess thing");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(new GridLayout(6,7));
+
+            ImageIcon YellowArrowUP = new ImageIcon("view/YellowArrowUP.png");
+            ImageIcon YellowArrowDOWN = new ImageIcon("view/YellowArrowDOWN.png");
+            ImageIcon BlueArrowUP = new ImageIcon("view/BlueArrowUP.png");
+            ImageIcon BlueArrowDOWN = new ImageIcon("view/BlueArrowDOWN.png");
+            //Generate the board
             String piece;
             for (int i = 0; i < 42; i++) {
                 JButton button;
                 if (piecePositions.containsKey(i) && piecePositions.get(i) != null) {
                     piece = piecePositions.get(i).toString();
-
-                    button = new JButton(piece);
+                    button = new JButton();
                     button.addActionListener(new ButtonClickListener());
+                    switch (piece) {
+                        case "p":
+                            button.setIcon(BlueArrowDOWN);
+                            break;
+                        case "P":
+                            button.setIcon(YellowArrowUP);
+                            break;
+                        default:
+                            break;
+                    }
                     frame.add(button);
                 }
                 else{
