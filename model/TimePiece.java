@@ -9,9 +9,12 @@ public class TimePiece extends ChessPiece{
 
     TimePiece( Color color, int position) {
         super(PieceType.TIME, color, position, false);
+    
         
     }
-    
+    public static TimePiece createTimePiece(Color color, int position) {
+        return new TimePiece(color, position);
+    }
     /**
      * Calculates the valid moves for the TimePiece on the given game board.
      * 
@@ -60,5 +63,7 @@ public class TimePiece extends ChessPiece{
     @Override
     public String toString(){
         return super.toString();
+
+    
     }
 }
