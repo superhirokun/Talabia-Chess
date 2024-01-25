@@ -1,6 +1,7 @@
 package control;
 import java.util.*;
 import model.*;
+import model.GameBoard;
 import model.GameBoard.BobTheBuilder;
 
 public class gamecontroller extends BoardLogic{
@@ -59,6 +60,18 @@ public class gamecontroller extends BoardLogic{
         }
         return zaBoardPiece;   
     }
+
+    public static void startGame(){
+        System.out.println('');
+
+        GameBoard gameBoard;
+        gameBoard.zaStarter(new BobTheBuilder());
+        }
+
+    public static void restGame(){
+
+    }
+    
 }    
 
     
