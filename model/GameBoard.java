@@ -171,6 +171,10 @@ public class GameBoard {
         }
 
     }
+
+    public HashMap<Integer, ChessPiece> getPiecePosition(){
+        return piecePosition;
+    }
 }
 
 
