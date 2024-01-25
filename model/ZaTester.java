@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import control.*;
 
 import model.GameBoard.BobTheBuilder;
 public class ZaTester {
@@ -10,7 +11,7 @@ public class ZaTester {
         GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
         BobTheBuilder builder = new BobTheBuilder();
         gameBoard.zaStarter(builder);
-        System.out.println(Arrays.toString(BoardLogic.zaFENDecoder(StartingFEN)));
+        System.out.println(Arrays.toString(gamecontroller.zaFENDecoder(StartingFEN)));
         System.out.println(builder.piecePosition);
         System.out.println(gameBoard.getAllPiecePosition());
     }
