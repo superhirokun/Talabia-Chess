@@ -133,6 +133,10 @@ public class GameBoard {
     public HashMap<Integer, ChessPiece> getAllThePiece(){
         return this.allThePiece;
     }
+
+    public HashMap<Integer, ChessPiece> getAllPiecePosition(){
+        return this.piecePosition;
+    }
     
     //for testing
 
