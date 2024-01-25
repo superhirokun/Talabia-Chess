@@ -9,6 +9,8 @@ import model.GameBoard.BobTheBuilder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class gameviewer{
@@ -25,10 +27,21 @@ public class gameviewer{
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(new GridLayout(6,7));
 
-            ImageIcon YellowArrowUP = new ImageIcon("view/YellowArrowUP.png");
-            ImageIcon YellowArrowDOWN = new ImageIcon("view/YellowArrowDOWN.png");
-            ImageIcon BlueArrowUP = new ImageIcon("view/BlueArrowUP.png");
-            ImageIcon BlueArrowDOWN = new ImageIcon("view/BlueArrowDOWN.png");
+            //yellow pieces
+            ImageIcon yellowPoint = new ImageIcon("view/yellowPoint.png");
+            ImageIcon rotatedYPoint = rotateImage(yellowPoint, Math.PI);
+            ImageIcon yellowHourglass = new ImageIcon("view/yellowHourglass.png");
+            ImageIcon yellowTime = new ImageIcon("view/yellowTime.png");
+            ImageIcon yellowPlus = new ImageIcon("view/yellowPlus.png");
+            ImageIcon yellowSun = new ImageIcon("view/yellowSun.png");
+            //blue pieces
+            ImageIcon bluePoint = new ImageIcon("view/bluePoint.png");
+            ImageIcon rotatedBPoint = rotateImage(bluePoint, Math.PI);
+            ImageIcon blueHourglass= new ImageIcon("view/blueHourglass.png");
+            ImageIcon blueTime = new ImageIcon("view/blueTime.png");
+            ImageIcon bluePlus = new ImageIcon("view/bluePlus.png");
+            ImageIcon blueSun = new ImageIcon("view/blueSun.png");
+            
             //Generate the board
             String piece;
             for (int i = 0; i < 42; i++) {
@@ -39,10 +52,34 @@ public class gameviewer{
                     button.addActionListener(new ButtonClickListener());
                     switch (piece) {
                         case "p":
-                            button.setIcon(BlueArrowDOWN);
+                            button.setIcon(rotatedBPoint);
                             break;
                         case "P":
-                            button.setIcon(YellowArrowUP);
+                            button.setIcon(yellowPoint);
+                            break;
+                        case "l":
+                            button.setIcon(bluePlus);
+                            break;
+                        case "L":
+                            button.setIcon(yellowPlus);
+                            break;
+                        case "h":
+                            button.setIcon(blueHourglass);
+                            break;
+                        case "H":
+                            button.setIcon(yellowHourglass);
+                            break;
+                        case "t":
+                            button.setIcon(blueTime);
+                            break;
+                        case "T":
+                            button.setIcon(yellowTime);
+                            break;
+                        case "s":
+                            button.setIcon(blueSun);
+                            break;
+                        case "S":
+                            button.setIcon(yellowSun);
                             break;
                         default:
                             break;
@@ -83,5 +120,21 @@ public class gameviewer{
             }
         }
     }
-    
+
+    private static ImageIcon rotateImage(ImageIcon icon, double angle) {
+        BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = bufferedImage.createGraphics();
+        icon.paintIcon(null, g2d, 0, 0);
+        g2d.dispose();
+
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(angle, bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2);
+        BufferedImage rotatedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = rotatedImage.createGraphics();
+        g.setTransform(transform);
+        g.drawImage(bufferedImage, 0, 0, null);
+        g.dispose();
+
+        return new ImageIcon(rotatedImage);
+    }
 }
