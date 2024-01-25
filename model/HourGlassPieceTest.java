@@ -21,7 +21,7 @@ public class HourGlassPieceTest {
         HourGlassPiece HourGlassPiece = new HourGlassPiece(Color.Yellow, 14);
         
         // Add the white HourGlassPiece to the game board
-        builder.placePiece(HourGlassPiece, 28);
+        builder.placePiece(gameBoard, HourGlassPiece, 28);
         
         // Calculate the valid moves for the white HourGlassPiece
         ArrayList<Integer> validMoves = HourGlassPiece.ValidMoves(gameBoard);

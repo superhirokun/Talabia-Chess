@@ -3,7 +3,12 @@ import java.util.*;
 import model.*;
 import model.GameBoard.BobTheBuilder;
 import model.BoardLogic;
-public class gameController extends BoardLogic{
+import model.ChessPiece;
+import model.Color;
+import model.GameBoard;
+import model.PlusPiece;
+import model.TimePiece;
+public class gamecontroller extends BoardLogic{
     
     public static GameBoard makeMoveBoardLogic(ChessPiece piece, int destination, GameBoard gamer){   //make the move
         BobTheBuilder builder = new BobTheBuilder();

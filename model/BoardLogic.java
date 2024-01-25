@@ -79,21 +79,21 @@ public class BoardLogic {
            if(prevPiecePosition.get(i) != null){    //check if the piece is not null
                if(prevPiecePosition.get(i).getPosition() == initialPosition){
                    prevPiecePosition.get(i).setPosition(destination);   //set the position of the piece to the new position which is the destination
-                   builder.placePiece(prevPiecePosition.get(i), destination);
+                   builder.placePiece(gamer, prevPiecePosition.get(i), destination);
                }else if(prevPiecePosition.get(i).getPosition() == destination && prevPiecePosition.get(i).getCaptured() == true){   //check if the piece is captured
                    continue;
                }else if(canSwitch == true){     //switch the time piece with the plus piece when the turn is even
                     if(prevPiecePosition.get(i) == gamer.plusPiece.get(i)){
-                        builder.placePiece(new TimePiece(gamer.plusPiece.get(i).getColor(), i), i);
+                        builder.placePiece(gamer, new TimePiece(gamer.plusPiece.get(i).getColor(), i), i);
                     }else if(prevPiecePosition.get(i) == gamer.timePiece.get(i)){
-                        builder.placePiece(new PlusPiece(gamer.timePiece.get(i).getColor(), i), i);
+                        builder.placePiece(gamer, new PlusPiece(gamer.timePiece.get(i).getColor(), i), i);
                     }
                }
                else{
-                   builder.placePiece(prevPiecePosition.get(i), i);   //if the piece is not the piece that is moving then place the piece at the same position
+                   builder.placePiece(gamer, prevPiecePosition.get(i), i);   //if the piece is not the piece that is moving then place the piece at the same position
                }
             }else{
-                builder.placePiece(null, i);    //if the piece is null then place a null piece
+                builder.placePiece(gamer, null, i);    //if the piece is null then place a null piece
             }
         }
         
