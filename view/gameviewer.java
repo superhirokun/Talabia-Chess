@@ -114,7 +114,7 @@ public class gameviewer{
             sourceButton.setSelected(!sourceButton.isSelected());
             if (sourceButton.isSelected()) {
                 previousColor = sourceButton.getBackground();
-                sourceButton.setBackground(Color.BLUE);
+                sourceButton.setBackground(Color.GREEN);
             } else {
                 sourceButton.setBackground(previousColor);
             }
