@@ -2,12 +2,7 @@ package control;
 import java.util.*;
 import model.*;
 import model.GameBoard.BobTheBuilder;
-import model.BoardLogic;
-import model.ChessPiece;
-import model.Color;
-import model.GameBoard;
-import model.PlusPiece;
-import model.TimePiece;
+
 public class gamecontroller extends BoardLogic{
     
     public static GameBoard makeMoveBoardLogic(ChessPiece piece, int destination, GameBoard gamer){   //make the move
@@ -25,9 +20,9 @@ public class gamecontroller extends BoardLogic{
                    continue;
                }else if(canSwitch == true){     //switch the time piece with the plus piece when the turn is even
                     if(prevPiecePosition.get(i) == gamer.plusPiece.get(i)){
-                        builder.placePiece(new TimePiece(gamer.plusPiece.get(i).getColor(), i), i);
+                        builder.placePiece(TimePiece.createTimePiece(gamer.plusPiece.get(i).getColor(), i), i);
                     }else if(prevPiecePosition.get(i) == gamer.timePiece.get(i)){
-                        builder.placePiece(new PlusPiece(gamer.timePiece.get(i).getColor(), i), i);
+                        builder.placePiece(TimePiece.createTimePiece(gamer.plusPiece.get(i).getColor(), i), i);
                     }
                }
                else{
@@ -39,6 +34,30 @@ public class gamecontroller extends BoardLogic{
         }
         
         return builder.build();
+    }
+
+    public static String[] zaFENDecoder(String zaFEN){
+        String zaFENString = zaFEN.split(" ")[0];
+        int zalength = zaFENString.length();
+        String[] zaBoardPiece = new String[BoardLogic.totalSquare];
+        int zaCounter = 0;
+        for(int i = 0; i < zalength; i++){
+            char zaCurrentChar = zaFENString.charAt(i);
+            if(zaCurrentChar == '/'){
+                continue;
+            }
+            if(Character.isDigit(zaCurrentChar)){
+                for(int j = 0; j < Character.getNumericValue(zaCurrentChar); j++){
+                    zaBoardPiece[zaCounter] = "-";
+                    zaCounter++;
+                }
+                
+            }else{
+                zaBoardPiece[zaCounter] = String.valueOf(zaCurrentChar);
+                zaCounter++;
+            }
+        }
+        return zaBoardPiece;   
     }
 }    
 
