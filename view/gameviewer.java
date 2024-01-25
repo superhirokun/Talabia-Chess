@@ -25,7 +25,24 @@ public class gameviewer{
         SwingUtilities.invokeLater(() ->{
             JFrame frame = new JFrame("Tabalia chess thing");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setLayout(new GridLayout(6,7));
+
+            JPanel options = new JPanel();
+            options.setBackground(Color.LIGHT_GRAY);
+            options.setPreferredSize(new Dimension(frame.getWidth(),30));
+            JButton save = new JButton("Save Game");
+            JButton load = new JButton("Load Previous Game");
+            JButton quit = new JButton("Quit Game");
+            
+            quit.addActionListener(new WindowCloseButton());
+            options.add(save);
+            options.add(load);
+            options.add(quit);
+
+
+            frame.add(options, BorderLayout.NORTH);
+
+            JPanel board = new JPanel();
+            board.setLayout(new GridLayout(6,7));
 
             //yellow pieces
             ImageIcon yellowPoint = new ImageIcon("view/yellowPoint.png");
@@ -84,12 +101,12 @@ public class gameviewer{
                         default:
                             break;
                     }
-                    frame.add(button);
+                    board.add(button);
                 }
                 else{
                     button = new JButton();
                     button.addActionListener(new ButtonClickListener());
-                    frame.add(button);
+                    board.add(button);
                 }
                 if (i % 2 == 0) {
                     button.setBackground(boardColor1);
@@ -98,7 +115,7 @@ public class gameviewer{
                     button.setBackground(boardColor2);
                 }
             }
-
+            frame.add(board);
             frame.pack();
             frame.setVisible(true);
         });
@@ -117,6 +134,21 @@ public class gameviewer{
                 sourceButton.setBackground(Color.GREEN);
             } else {
                 sourceButton.setBackground(previousColor);
+            }
+        }
+    }
+
+    public static class WindowCloseButton implements ActionListener{
+        private JFrame appFrame;
+
+        public void ActionListenerClass(JFrame frame){
+            this.appFrame = frame;
+        }
+
+        public void actionPerformed(ActionEvent e){
+            int confirmation = JOptionPane.showConfirmDialog(appFrame, "Are you sure you want to close this window?", "Confirm Close", JOptionPane.YES_NO_OPTION);
+            if (confirmation == JOptionPane.YES_OPTION) {
+                System.exit(0);
             }
         }
     }
