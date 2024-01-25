@@ -20,7 +20,7 @@ public class PlusPieceTest {
         PlusPiece plusPiece = new PlusPiece(Color.Yellow, 14);
         
         // Add the white PlusPiece to the game board
-        builder.placePiece(plusPiece, 28);
+        builder.placePiece(gameBoard, plusPiece, 28);
         
         // Calculate the valid moves for the white PlusPiece
         ArrayList<Integer> validMoves = plusPiece.ValidMoves(gameBoard);
