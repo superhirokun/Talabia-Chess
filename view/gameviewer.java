@@ -17,21 +17,23 @@ public class gameviewer{
         GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
         gameBoard.zaStarter(new BobTheBuilder());
         HashMap<Integer, ChessPiece> piecePositions = gameBoard.getPiecePosition();
-        for (int i = 0; i < 42; i++) {
-            System.out.println(piecePositions);
-        }
+            System.out.println(piecePositions);      
         SwingUtilities.invokeLater(() ->{
             JFrame frame = new JFrame("Tabalia chess thing");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(new GridLayout(6,7));
+            String piece;
+            for (int i = 0; i < 42; i++) {
+                if (piecePositions.containsKey(i) && piecePositions.get(i) != null) {
+                    piece = piecePositions.get(i).toString();
 
-            for (int i = 0; i < 6; i++) {
-                for (int index = 0; index < 7; index++) {
+                    JButton button = new JButton(piece);
+                    button.addActionListener(new ButtonClickListener());
+                    frame.add(button);
+                }
+                else{
                     JButton button = new JButton();
                     button.addActionListener(new ButtonClickListener());
-                    ImageIcon icon = new ImageIcon("view/pawns.jpg");
-                    button.setIcon(icon);
-
                     frame.add(button);
                 }
             }
@@ -54,10 +56,6 @@ public class gameviewer{
                 sourceButton.setBackground(null);
             }
         }
-    }
-
-    public static class getChessPieces{
-
     }
     
 }
