@@ -102,7 +102,4 @@ public abstract class ChessPiece {
             return this.pieceType;
         }
     }
-
-    
-
 }
