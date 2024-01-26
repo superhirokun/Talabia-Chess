@@ -1,12 +1,14 @@
 package model;
 import java.util.*;
 
+import control.gamecontroller;
+
 public class GameBoard {
     private final String[] board = new String[BoardLogic.totalSquare];
     protected HashMap<Integer, ChessPiece> piecePosition;
     protected HashMap<Integer, String> pieceStringPosition; //testing
     //the starting FEN for the game
-    protected final String StartingFEN = "lhtsthl/ppppppp/7/7/PPPPPPP/LHTSTHL y 1";    /*the first part b4 the space is the position of the piece on the board, 
+    protected final static String StartingFEN = "lhtsthl/ppppppp/7/7/PPPPPPP/LHTSTHL y 1";    /*the first part b4 the space is the position of the piece on the board, 
                                                                                             the y is the yellow player's turn, the 1 is the number of turns*/
     private HashMap<Integer, ChessPiece> bluePiece;
     private HashMap<Integer, ChessPiece> yellowPiece;
@@ -30,10 +32,12 @@ public class GameBoard {
     }
 
     public void zaStarter(BobTheBuilder builder){
-        boardSetting(builder,BoardLogic.zaFENDecoder(StartingFEN));
+        boardSetting(builder,gamecontroller.zaFENDecoder(StartingFEN));
         boardCreator(builder);
         displayBoard();   
     }
+    
+
 
     //Method
     public GameBoard boardSetting(BobTheBuilder builder, String[] zaFEN){
@@ -177,10 +181,29 @@ public class GameBoard {
             return new GameBoard(this);
         }
 
+        // public void placePiece(TimePiece timePiece, int i) {
+        //     // TODO Auto-generated method stub
+        //     throw new UnsupportedOperationException("Unimplemented method 'placePiece'");
+        // }
+
+        // public void placePiece(ChessPiece chessPiece, int destination) {
+        //     // TODO Auto-generated method stub
+        //     throw new UnsupportedOperationException("Unimplemented method 'placePiece'");
+        // }
+
     }
 
     public HashMap<Integer, ChessPiece> getPiecePosition(){
         return piecePosition;
+    }
+
+    public boolean isSunPieceCaptured() {
+        for (ChessPiece piece : piecePosition.values()) {
+            if (piece != null && piece.getPieceType() == ChessPiece.PieceType.SUN && piece.getCaptured()) {
+                return true; // Found a captured Sun piece
+            }
+        }
+        return false; // No captured Sun piece found
     }
 }
 
