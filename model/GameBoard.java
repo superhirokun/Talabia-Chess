@@ -10,6 +10,7 @@ public class GameBoard {
     //the starting FEN for the game
     protected final static String StartingFEN = "lhtsthl/ppppppp/7/7/PPPPPPP/LHTSTHL y 1";    /*the first part b4 the space is the position of the piece on the board, 
                                                                                             the y is the yellow player's turn, the 1 is the number of turns*/
+    protected final static String SavingFEN =  "lhtsthl/ppppppp/7/7/PPPPPPP/LHTSTHL y 1";
     private HashMap<Integer, ChessPiece> bluePiece;
     private HashMap<Integer, ChessPiece> yellowPiece;
     private HashMap<Integer, ChessPiece> allThePiece;
@@ -37,6 +38,9 @@ public class GameBoard {
         displayBoard();   
     }
     
+    public void ZaSaver(BobTheBuilder builder){
+        boardSetting(builder,gamecontroller.zaFENEncoder(SavingFEN));
+    }
 
 
     //Method
