@@ -12,118 +12,121 @@ import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
-import java.util.Map;
-import java.io.*;
 
 public class gameviewer{
     public static void main(String[] args) {
-        //Builder boardBuilder = new Builder();
-        GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
-        gameBoard.zaStarter(new BobTheBuilder());
-        HashMap<Integer, ChessPiece> piecePositions = gameBoard.getPiecePosition();
-        System.out.println(piecePositions); 
-        Color boardColor1 = new Color(231, 237, 159);
-        Color boardColor2 = new Color(219, 164, 86); 
-        SwingUtilities.invokeLater(() ->{
-            JFrame frame = new JFrame("Tabalia chess thing");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameviewer gameDisplay = new gameviewer();
+        gameDisplay.displayGame();
+    }
 
-            JPanel options = new JPanel();
-            options.setBackground(Color.LIGHT_GRAY);
-            options.setPreferredSize(new Dimension(frame.getWidth(),30));
-            JButton save = new JButton("Save Game");
-            JButton load = new JButton("Load Previous Game");
-            JButton quit = new JButton("Quit Game");
-            
-            //save.addActionListener(new saveButton());
-            quit.addActionListener(new WindowCloseButton());
-            options.add(save);
-            options.add(load);
-            options.add(quit);
-
-
-            frame.add(options, BorderLayout.NORTH);
-
-            JPanel board = new JPanel();
-            board.setLayout(new GridLayout(6,7));
-
-            //yellow pieces
-            ImageIcon yellowPoint = new ImageIcon("view/yellowPoint.png");
-            ImageIcon rotatedYPoint = rotateImage(yellowPoint, Math.PI);
-            ImageIcon yellowHourglass = new ImageIcon("view/yellowHourglass.png");
-            ImageIcon yellowTime = new ImageIcon("view/yellowTime.png");
-            ImageIcon yellowPlus = new ImageIcon("view/yellowPlus.png");
-            ImageIcon yellowSun = new ImageIcon("view/yellowSun.png");
-            //blue pieces
-            ImageIcon bluePoint = new ImageIcon("view/bluePoint.png");
-            ImageIcon rotatedBPoint = rotateImage(bluePoint, Math.PI);
-            ImageIcon blueHourglass= new ImageIcon("view/blueHourglass.png");
-            ImageIcon blueTime = new ImageIcon("view/blueTime.png");
-            ImageIcon bluePlus = new ImageIcon("view/bluePlus.png");
-            ImageIcon blueSun = new ImageIcon("view/blueSun.png");
-            
-            //Generate the board
-            String piece;
-            for (int i = 0; i < 42; i++) {
-                JButton button;
-                if (piecePositions.containsKey(i) && piecePositions.get(i) != null) {
-                    piece = piecePositions.get(i).toString();
-                    button = new JButton();
-                    button.addActionListener(new ButtonClickListener());
-                    switch (piece) {
-                        case "p":
-                            button.setIcon(rotatedBPoint);
-                            break;
-                        case "P":
-                            button.setIcon(yellowPoint);
-                            break;
-                        case "l":
-                            button.setIcon(bluePlus);
-                            break;
-                        case "L":
-                            button.setIcon(yellowPlus);
-                            break;
-                        case "h":
-                            button.setIcon(blueHourglass);
-                            break;
-                        case "H":
-                            button.setIcon(yellowHourglass);
-                            break;
-                        case "t":
-                            button.setIcon(blueTime);
-                            break;
-                        case "T":
-                            button.setIcon(yellowTime);
-                            break;
-                        case "s":
-                            button.setIcon(blueSun);
-                            break;
-                        case "S":
-                            button.setIcon(yellowSun);
-                            break;
-                        default:
-                            break;
-                    }
-                    board.add(button);
-                }
-                else{
-                    button = new JButton();
-                    button.addActionListener(new ButtonClickListener());
-                    board.add(button);
-                }
-                if (i % 2 == 0) {//cunny 😭😭😭
-                    button.setBackground(boardColor1);
-                }
-                else{
-                    button.setBackground(boardColor2);
-                }
-            }
-            frame.add(board);
-            frame.pack();
-            frame.setVisible(true);
-        });
+    public void displayGame(){
+                //Builder boardBuilder = new Builder();
+                GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
+                gameBoard.zaStarter(new BobTheBuilder());
+                HashMap<Integer, ChessPiece> piecePositions = gameBoard.getPiecePosition();
+                System.out.println(piecePositions); 
+                Color boardColor1 = new Color(231, 237, 159);
+                Color boardColor2 = new Color(219, 164, 86); 
+                SwingUtilities.invokeLater(() ->{
+                    JFrame frame = new JFrame("Tabalia chess thing");
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-
+                    JPanel options = new JPanel();
+                    options.setBackground(Color.LIGHT_GRAY);
+                    options.setPreferredSize(new Dimension(frame.getWidth(),30));
+                    JButton save = new JButton("Save Game");
+                    JButton load = new JButton("Load Previous Game");
+                    JButton quit = new JButton("Quit Game");
+                    
+                    //save.addActionListener(new saveButton());
+                    quit.addActionListener(new WindowCloseButton());
+                    options.add(save);
+                    options.add(load);
+                    options.add(quit);
+        
+        
+                    frame.add(options, BorderLayout.NORTH);
+        
+                    JPanel board = new JPanel();
+                    board.setLayout(new GridLayout(6,7));
+        
+                    //yellow pieces
+                    ImageIcon yellowPoint = new ImageIcon("view/yellowPoint.png");
+                    ImageIcon rotatedYPoint = rotateImage(yellowPoint, Math.PI);
+                    ImageIcon yellowHourglass = new ImageIcon("view/yellowHourglass.png");
+                    ImageIcon yellowTime = new ImageIcon("view/yellowTime.png");
+                    ImageIcon yellowPlus = new ImageIcon("view/yellowPlus.png");
+                    ImageIcon yellowSun = new ImageIcon("view/yellowSun.png");
+                    //blue pieces
+                    ImageIcon bluePoint = new ImageIcon("view/bluePoint.png");
+                    ImageIcon rotatedBPoint = rotateImage(bluePoint, Math.PI);
+                    ImageIcon blueHourglass= new ImageIcon("view/blueHourglass.png");
+                    ImageIcon blueTime = new ImageIcon("view/blueTime.png");
+                    ImageIcon bluePlus = new ImageIcon("view/bluePlus.png");
+                    ImageIcon blueSun = new ImageIcon("view/blueSun.png");
+                    
+                    //Generate the board
+                    String piece;
+                    for (int i = 0; i < 42; i++) {
+                        JButton button;
+                        if (piecePositions.containsKey(i) && piecePositions.get(i) != null) {
+                            piece = piecePositions.get(i).toString();
+                            button = new JButton();
+                            button.addActionListener(new ButtonClickListener());
+                            switch (piece) {
+                                case "p":
+                                    button.setIcon(rotatedBPoint);
+                                    break;
+                                case "P":
+                                    button.setIcon(yellowPoint);
+                                    break;
+                                case "l":
+                                    button.setIcon(bluePlus);
+                                    break;
+                                case "L":
+                                    button.setIcon(yellowPlus);
+                                    break;
+                                case "h":
+                                    button.setIcon(blueHourglass);
+                                    break;
+                                case "H":
+                                    button.setIcon(yellowHourglass);
+                                    break;
+                                case "t":
+                                    button.setIcon(blueTime);
+                                    break;
+                                case "T":
+                                    button.setIcon(yellowTime);
+                                    break;
+                                case "s":
+                                    button.setIcon(blueSun);
+                                    break;
+                                case "S":
+                                    button.setIcon(yellowSun);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            board.add(button);
+                        }
+                        else{
+                            button = new JButton();
+                            button.addActionListener(new ButtonClickListener());
+                            board.add(button);
+                        }
+                        if (i % 2 == 0) {//cunny 😭😭😭
+                            button.setBackground(boardColor1);
+                        }
+                        else{
+                            button.setBackground(boardColor2);
+                        }
+                    }
+                    frame.add(board);
+                    frame.pack();
+                    frame.setVisible(true);
+                });
+                
+        
     }
 
 
@@ -149,7 +152,7 @@ public class gameviewer{
         }
 
         public void actionPerformed(ActionEvent e){
-            int confirmation = JOptionPane.showConfirmDialog(appFrame, "Are you sure you want to close this window?", "Confirm Close", JOptionPane.YES_NO_OPTION);
+            int confirmation = JOptionPane.showConfirmDialog(appFrame, "It is recommended that you save before quitting. \nAre you sure you want to quit the game?", "Confirm Close", JOptionPane.YES_NO_OPTION);
             if (confirmation == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
