@@ -111,7 +111,7 @@ public class gameviewer{
                     button.addActionListener(new ButtonClickListener());
                     board.add(button);
                 }
-                if (i % 2 == 0) {
+                if (i % 2 == 0) {//cunny 😭😭😭
                     button.setBackground(boardColor1);
                 }
                 else{
