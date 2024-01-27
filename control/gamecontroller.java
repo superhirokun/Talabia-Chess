@@ -59,6 +59,12 @@ public class gamecontroller extends BoardLogic{
         return zaBoardPiece;   
     }
 
+    public static String[] zaFENEncoder(String zaFEN){
+        String zaFENString = zaFEN.split("")[0];
+        int zalength = zaFENString.length();
+        String[] zaBoardSave = new String[GameBoard.getPiecePosition];
+    }
+
     public static void startGame(){
         System.out.println("Game is starting...");
 
@@ -70,7 +76,7 @@ public class gamecontroller extends BoardLogic{
     }
 
     public static void saveGame() {
-        
+           
     }
 
     public static void loadGame() {
