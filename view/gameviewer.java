@@ -152,7 +152,7 @@ public class gameviewer{
         }
 
         public void actionPerformed(ActionEvent e){
-            int confirmation = JOptionPane.showConfirmDialog(appFrame, "Are you sure you want to close this window?", "Confirm Close", JOptionPane.YES_NO_OPTION);
+            int confirmation = JOptionPane.showConfirmDialog(appFrame, "It is recommended that you save before quitting. \nAre you sure you want to quit the game?", "Confirm Close", JOptionPane.YES_NO_OPTION);
             if (confirmation == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
