@@ -5,7 +5,7 @@ import javax.swing.*;
 import model.ChessPiece;
 import model.GameBoard;
 import model.GameBoard.BobTheBuilder;
-
+import model.BoardLogic;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,13 +16,29 @@ import java.util.HashMap;
 public class gameviewer{
     public static void main(String[] args) {
         gameviewer gameDisplay = new gameviewer();
-        gameDisplay.displayGame();
+        int turnBruh = 0;
+        GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
+        gameDisplay.displayGame(gameBoard, turnBruh);
+
+        while (!gameBoard.isSunPieceCaptured()) {
+            
+
+
+
+            BoardLogic.turnCounter(turnBruh); //increments counter 
+            gameBoard.isSunPieceCaptured(); //check if any sunpiece is captured (not sure if this works)
+            BoardLogic.zaSwitcher(); //check if next turn requires switching between plus and time piece
+        }
+
+        // code if isSunPieceCaptured() true
     }
 
-    public void displayGame(){
+    public void displayGame(GameBoard gameBoard, int turnCheck){
                 //Builder boardBuilder = new Builder();
-                GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
-                gameBoard.zaStarter(new BobTheBuilder());
+                if (turnCheck == 0) {
+                    gameBoard.zaStarter(new BobTheBuilder()); //prints starter board
+                }
+                gameBoard.
                 HashMap<Integer, ChessPiece> piecePositions = gameBoard.getPiecePosition();
                 System.out.println(piecePositions); 
                 Color boardColor1 = new Color(231, 237, 159);
