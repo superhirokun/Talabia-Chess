@@ -10,8 +10,7 @@ public class gamecontroller extends BoardLogic{
         int initialPosition = piece.getPosition();
         HashMap<Integer, ChessPiece> prevPiecePosition = new HashMap<>();
         prevPiecePosition = gamer.getAllThePiece();  //get the previous position of the piece
-        int totalSquare = 42;
-        for(int i = 0; i < totalSquare; i++){
+        for(int i = 0; i < BoardLogic.totalSquare; i++){
            if(prevPiecePosition.get(i) != null){    //check if the piece is not null
                if(prevPiecePosition.get(i).getPosition() == initialPosition){
                    prevPiecePosition.get(i).setPosition(destination);   //set the position of the piece to the new position which is the destination
