@@ -1,6 +1,7 @@
 package view;
 import javax.swing.*;
 
+import control.gamecontroller;
 import model.ChessPiece;
 import model.GameBoard;
 import model.GameBoard.BobTheBuilder;
@@ -10,24 +11,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class gameviewer{
     private GameBoard gameBoard;
-
+    private gamecontroller gameController;
+    JFrame frame = new JFrame("Tabalia chess");
         public static void main(String[] args) {
         gameviewer gameView = new gameviewer();
         int turnBruh = 0;
-        gameView.gameBoard= new GameBoard(new GameBoard.BobTheBuilder());
+        gameView.gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
         gameView.displayGame(gameView.gameBoard, turnBruh);
-            
+        boolean sunPieceCaptured = false;  
 while (!gameView.gameBoard.isSunPieceCaptured()) {
             BoardLogic.turnCounter(turnBruh); //increments counter 
-            gameView.gameBoard.isSunPieceCaptured(); //check if any sunpiece is captured (not sure if this works)
+            sunPieceCaptured = gameView.gameBoard.isSunPieceCaptured(); //check if any sunpiece is captured (not sure if this works)
             BoardLogic.zaSwitcher(); //check if next turn requires switching between plus and time piece
-        }
-
-        // code if isSunPieceCaptured() true
+            if (sunPieceCaptured == true) {
+            //logic for when the sunPiece is captured
+            JOptionPane.showMessageDialog(null,"Game Over loosah","Game Over",JOptionPane.INFORMATION_MESSAGE);
+            break;
+            }
+            else{
+                //logic for when its not captured(game con)
+            }
+        }    
     }
 
     public void displayGame(GameBoard gameBoard, int turnCheck){
@@ -41,7 +50,7 @@ while (!gameView.gameBoard.isSunPieceCaptured()) {
                 Color boardColor1 = new Color(231, 237, 159);
                 Color boardColor2 = new Color(219, 164, 86); 
                 SwingUtilities.invokeLater(() ->{
-                    JFrame frame = new JFrame("Tabalia chess"); //main application frame
+                    //JFrame frame = new JFrame("Tabalia chess"); //main application frame i put this on top but commenting it just incase it breaks later
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
                     JPanel options = new JPanel(); //panel for the game options
@@ -157,6 +166,7 @@ while (!gameView.gameBoard.isSunPieceCaptured()) {
     private int selectedPosition;
     private Color previousColor;
     private boolean isFirstClick = true;
+    ArrayList <Integer> allValidMoves = new ArrayList<>();
 
     public ButtonClickListener(gameviewer gameView) {
         this.gameView = gameView;
@@ -164,15 +174,17 @@ while (!gameView.gameBoard.isSunPieceCaptured()) {
 
     public void actionPerformed(ActionEvent e) {
         JButton sourceButton = (JButton) e.getSource();
+        JButton secondButton = (JButton) e.getSource();
 
-        if (isFirstClick) {
+        if (isFirstClick == true) {
             handleFirstClick(sourceButton);
         } else {
-            handleSecondClick(sourceButton);
+            handleSecondClick(secondButton);
         }
     }
 
     private void handleFirstClick(JButton sourceButton) {
+        previousColor = sourceButton.getBackground();
         sourceButton.setBackground(Color.GREEN);
 
         // Fetch the key (position) and value (ChessPiece) of the selected button
@@ -181,23 +193,36 @@ while (!gameView.gameBoard.isSunPieceCaptured()) {
 
         System.out.println("Selected Position: " + selectedPosition);
         System.out.println("Selected ChessPiece: " + selectedPiece);
+        // check if valid (if valid, returns an arraylist of integers containing all valid positions to move)
+        
+        allValidMoves = gamecontroller.isValidMove(selectedPiece, selectedPosition, gameView.gameBoard);
+        System.out.println("all valid moves : " + allValidMoves);
         
 
         isFirstClick = false;
     }
 
-    private void handleSecondClick(JButton sourceButton) {
-        sourceButton.setBackground(previousColor);
-
+    private void handleSecondClick(JButton secondButton) {
+        secondButton.setBackground(Color.BLUE);
+        
         // Fetch the destination position
-        int destinationPosition = getButtonPosition(sourceButton);
-
-        // Perform the move logic using selectedPiece and destinationPosition
-        // You may want to add a method in your game logic to handle this, e.g., gameView.gameBoard.makeMove(selectedPiece, destinationPosition);
-
+        int destinationPosition = getButtonPosition(secondButton);
+        
+        // check if destination == validmoves, if valid, use makeMoveBoardLogic to edit the hashmaps and generate a new board.
+        for (int i = 0; i < allValidMoves.size(); i++) {
+            if (destinationPosition == allValidMoves.get(i)) {
+                GameBoard test = gamecontroller.makeMoveBoardLogic(selectedPiece, destinationPosition, gameView.gameBoard);
+                System.out.println(test);
+                break;
+            }
+            else {
+                //try again?
+            }
+        }
+        
         System.out.println("Destination Position: " + destinationPosition);
 
-        // Reset state for the next move
+        // Reset state for the next move kys
         selectedPiece = null;
         selectedPosition = -1;
         isFirstClick = true;

@@ -2,7 +2,7 @@ package control;
 import java.util.*;
 import model.*;
 import model.GameBoard.BobTheBuilder;
-import model.Color;
+import model.Color; //push the code again homie, ur previous code didnt save the previous color so i edited it abit
 
 public class gamecontroller extends BoardLogic{
     
@@ -136,73 +136,72 @@ public class gamecontroller extends BoardLogic{
         System.out.println("Reseti(french for reset)");
     }
 
-    public boolean isValidMove(ChessPiece piece, int sourcePosition, GameBoard gameBoard) {
-    // Check if the move is valid for the selected piece
+    public static ArrayList<Integer> isValidMove(ChessPiece piece, int sourcePosition, GameBoard gameBoard) {
+    //failed arraylist to check for failure (returns an array list with only -1)
+    ArrayList<Integer> failed = new ArrayList<>();
+    failed.add(-1);
     switch ((piece.toString().charAt(0))) { //placeholder but it should check the piece in a selected tile, turn to string, and initiate switch case
         case 'L':
             // Handle PLUS piece
             PlusPiece plusY = PlusPiece.createPlusPiece(Color.Yellow, sourcePosition); //should be the same for all others with slight variations
-            plusY.ValidMoves(gameBoard);
-            break;
+            return plusY.ValidMoves(gameBoard);
+            
 
         case 'H':
             // Handle HOURGLASS piece
             HourGlassPiece hourglassY = HourGlassPiece.createHourGlassPiece(Color.Yellow, sourcePosition); 
-            hourglassY.ValidMoves(gameBoard);
-            break;
+            return hourglassY.ValidMoves(gameBoard);
+            
 
         case 'T':
             // Handle TIME piece
             TimePiece timeY = TimePiece.createTimePiece(Color.Yellow, sourcePosition);
-            timeY.ValidMoves(gameBoard);
-            break;
+            return timeY.ValidMoves(gameBoard);
+            
 
         case 'S':
             // Handle SUN piece
             SunPiece sunY = SunPiece.createSunPiece(Color.Yellow, sourcePosition);
-            sunY.ValidMoves(gameBoard);
-            break;
+            return sunY.ValidMoves(gameBoard);
+            
 
         case 'P':
             // Handle POINT piece
             PointPiece pointY = PointPiece.createPointPiece(Color.Yellow, sourcePosition);
-            pointY.ValidMoves(gameBoard);
-            break;
+            return pointY.ValidMoves(gameBoard);
+            
         case 'l':
             // Handle PLUS piece (Blue)
             PlusPiece plusB = PlusPiece.createPlusPiece(Color.Blue, sourcePosition); //should be the same for all others with slight variations
-            plusB.ValidMoves(gameBoard);
-            break;
+            return plusB.ValidMoves(gameBoard);
 
         case 'h':
             // Handle HOURGLASS piece
             HourGlassPiece hourglassB = HourGlassPiece.createHourGlassPiece(Color.Blue, sourcePosition); //should be the same for all others with slight variations
-            hourglassB.ValidMoves(gameBoard);
-            break;
+            return hourglassB.ValidMoves(gameBoard);
 
         case 't':
             // Handle TIME piece
             TimePiece timeB = TimePiece.createTimePiece(Color.Blue, sourcePosition);
-            timeB.ValidMoves(gameBoard);
-            break;
-
+            return timeB.ValidMoves(gameBoard);
+            
         case 's':
             // Handle SUN piece
             SunPiece sunB = SunPiece.createSunPiece(Color.Blue, sourcePosition);
-            sunB.ValidMoves(gameBoard);
-            break;
+            return sunB.ValidMoves(gameBoard);
+            
 
         case 'p':
             // Handle POINT piece
             PointPiece pointB = PointPiece.createPointPiece(Color.Blue, sourcePosition);
-            pointB.ValidMoves(gameBoard);
-            break;
+            return pointB.ValidMoves(gameBoard);
+            
 
         default:
             // Handle default case or return false if necessary
-            return false;
+            break;
     }
-    return true; // Placeholder, replace later
+    return failed;
 }
     public static void saveGame() {
            
