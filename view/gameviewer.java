@@ -1,5 +1,4 @@
 package view;
-
 import javax.swing.*;
 
 import model.ChessPiece;
@@ -21,10 +20,6 @@ public class gameviewer{
         gameDisplay.displayGame(gameBoard, turnBruh);
 
         while (!gameBoard.isSunPieceCaptured()) {
-            
-
-
-
             BoardLogic.turnCounter(turnBruh); //increments counter 
             gameBoard.isSunPieceCaptured(); //check if any sunpiece is captured (not sure if this works)
             BoardLogic.zaSwitcher(); //check if next turn requires switching between plus and time piece
@@ -144,6 +139,7 @@ public class gameviewer{
                     frame.pack(); //automatically resize the elements in the app to a certain suitable size
                     frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                     frame.setVisible(true);
+
                 });
                 
         
