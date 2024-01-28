@@ -33,7 +33,6 @@ public class gamecontroller extends BoardLogic{
                 builder.placePiece(gamer,null, i);    //if the piece is null then place a null piece
             }
         }
-        
         return builder.build();
     }
 

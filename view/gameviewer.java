@@ -17,9 +17,9 @@ import java.util.HashMap;
 public class gameviewer {
     private GameBoard gameBoard;
     private static ArrayList<Integer> allValidMoves = new ArrayList<>();
+    private boolean moveMade;
     private ArrayList<ChessPiece> saveFirstSelect;
     public GameBoard updatedGameboard;
-    private boolean moveMade;
     public int turnBruh;
     boolean isFirstClick = true;
     
@@ -55,7 +55,7 @@ public class gameviewer {
         boolean sunPieceCaptured = false;
         while (!gameView.gameBoard.isSunPieceCaptured()) {
 
-            if (gameView.isMoveMade() == true && !gameView.isFirstClick()) {
+            if (gameView.isMoveMade() == true && !gameView.isFirstClick() && gameView.saveFirstSelect.isEmpty()) {
                 int turn = BoardLogic.turnCounter(gameView.turnBruh); // increments counter
                 System.out.println("turn counter : " + turn);
                 BoardLogic.zaSwitcher(); // check if the next turn requires switching between plus and time piece
@@ -84,109 +84,124 @@ public class gameviewer {
         // set the color of the board to look like a chessboard
         Color boardColor1 = new Color(231, 237, 159);
         Color boardColor2 = new Color(219, 164, 86);
+        
         SwingUtilities.invokeLater(() -> {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+    
             JPanel options = new JPanel(); // panel for the game options
             options.setBackground(Color.LIGHT_GRAY);
             options.setPreferredSize(new Dimension(frame.getWidth(), 30));
             JButton save = new JButton("Save Game");
             JButton load = new JButton("Load Previous Game");
             JButton quit = new JButton("Quit Game");
-
+    
             quit.addActionListener(new WindowCloseButton());
             options.add(save);
             options.add(load);
             options.add(quit);
             frame.add(options, BorderLayout.NORTH);
-
-            // panel with the chess board
-            JPanel board = new JPanel();
-            board.setLayout(new GridLayout(6, 7));
-
-            // yellow pieces
-            ImageIcon yellowPoint = new ImageIcon("view/yellowPoint.png");
-            ImageIcon rotatedYPoint = rotateImage(yellowPoint, Math.PI);
-            ImageIcon yellowHourglass = new ImageIcon("view/yellowHourglass.png");
-            ImageIcon yellowTime = new ImageIcon("view/yellowTime.png");
-            ImageIcon yellowPlus = new ImageIcon("view/yellowPlus.png");
-            ImageIcon yellowSun = new ImageIcon("view/yellowSun.png");
-            // blue pieces
-            ImageIcon bluePoint = new ImageIcon("view/bluePoint.png");
-            ImageIcon rotatedBPoint = rotateImage(bluePoint, Math.PI);
-            ImageIcon blueHourglass = new ImageIcon("view/blueHourglass.png");
-            ImageIcon blueTime = new ImageIcon("view/blueTime.png");
-            ImageIcon bluePlus = new ImageIcon("view/bluePlus.png");
-            ImageIcon blueSun = new ImageIcon("view/blueSun.png");
-
-            Image appImage = yellowSun.getImage();
-            frame.setIconImage(appImage);
-
-            // Generate the board
-            String piece;
-            for (int i = 0; i < 42; i++) {
-                JButton button;
-                if (piecePositions.containsKey(i) && piecePositions.get(i) != null) {
-                    piece = piecePositions.get(i).toString();
-                    button = new JButton();
-                    button.setActionCommand(String.valueOf(i));
-                    ButtonClickListener buttonClickListener = new ButtonClickListener(this);
-                    button.addActionListener(buttonClickListener);
-                    // place piece icon if there is a specific piece in that spot
-                    switch (piece) {
-                        case "p":
-                            button.setIcon(rotatedBPoint);
-                            break;
-                        case "P":
-                            button.setIcon(yellowPoint);
-                            break;
-                        case "l":
-                            button.setIcon(bluePlus);
-                            break;
-                        case "L":
-                            button.setIcon(yellowPlus);
-                            break;
-                        case "h":
-                            button.setIcon(blueHourglass);
-                            break;
-                        case "H":
-                            button.setIcon(yellowHourglass);
-                            break;
-                        case "t":
-                            button.setIcon(blueTime);
-                            break;
-                        case "T":
-                            button.setIcon(yellowTime);
-                            break;
-                        case "s":
-                            button.setIcon(blueSun);
-                            break;
-                        case "S":
-                            button.setIcon(yellowSun);
-                            break;
-                        default:
-                            break;
-                    }
-                    board.add(button);
-                } else {
-                    button = new JButton();
-                    button.addActionListener(new ButtonClickListener(this));
-                    button.setActionCommand(String.valueOf(i));
-                    board.add(button);
-                }
-                if (i % 2 == 0) {
-                    button.setBackground(boardColor1);
-                } else {
-                    button.setBackground(boardColor2);
+    
+            // Create a new panel with the chess board
+            JPanel boardPanel = createBoardPanel(piecePositions, boardColor1, boardColor2);
+            
+            // Remove the existing boardPanel from the frame's content pane
+            Container contentPane = frame.getContentPane();
+            Component[] components = contentPane.getComponents();
+            for (Component component : components) {
+                if (component instanceof JPanel) {
+                    contentPane.remove(component);
+                    break; 
                 }
             }
-            frame.add(board);
+    
+            // Add the new boardPanel to the frame's content pane
+            frame.add(boardPanel);
             frame.pack();
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.setVisible(true);
-
         });
+    }
 
+    private JPanel createBoardPanel(HashMap<Integer, ChessPiece> piecePositions, Color boardColor1, Color boardColor2) {
+        // Create a new panel with the chess board
+        JPanel boardPanel = new JPanel();
+        boardPanel.setLayout(new GridLayout(6, 7));
+    
+        // yellow pieces
+        ImageIcon yellowPoint = new ImageIcon("view/yellowPoint.png");
+        ImageIcon rotatedYPoint = rotateImage(yellowPoint, Math.PI);
+        ImageIcon yellowHourglass = new ImageIcon("view/yellowHourglass.png");
+        ImageIcon yellowTime = new ImageIcon("view/yellowTime.png");
+        ImageIcon yellowPlus = new ImageIcon("view/yellowPlus.png");
+        ImageIcon yellowSun = new ImageIcon("view/yellowSun.png");
+        // blue pieces
+        ImageIcon bluePoint = new ImageIcon("view/bluePoint.png");
+        ImageIcon rotatedBPoint = rotateImage(bluePoint, Math.PI);
+        ImageIcon blueHourglass = new ImageIcon("view/blueHourglass.png");
+        ImageIcon blueTime = new ImageIcon("view/blueTime.png");
+        ImageIcon bluePlus = new ImageIcon("view/bluePlus.png");
+        ImageIcon blueSun = new ImageIcon("view/blueSun.png");
+    
+        // Generate the board
+        String piece;
+        for (int i = 0; i < 42; i++) {
+            JButton button;
+            if (piecePositions.containsKey(i) && piecePositions.get(i) != null) {
+                piece = piecePositions.get(i).toString();
+                button = new JButton();
+                button.setActionCommand(String.valueOf(i));
+                ButtonClickListener buttonClickListener = new ButtonClickListener(this);
+                button.addActionListener(buttonClickListener);
+                // place piece icon if there is a specific piece in that spot
+                switch (piece) {
+                    case "p":
+                        button.setIcon(rotatedBPoint);
+                        break;
+                    case "P":
+                        button.setIcon(yellowPoint);
+                        break;
+                    case "l":
+                        button.setIcon(bluePlus);
+                        break;
+                    case "L":
+                        button.setIcon(yellowPlus);
+                        break;
+                    case "h":
+                        button.setIcon(blueHourglass);
+                        break;
+                    case "H":
+                        button.setIcon(yellowHourglass);
+                        break;
+                    case "t":
+                        button.setIcon(blueTime);
+                        break;
+                    case "T":
+                        button.setIcon(yellowTime);
+                        break;
+                    case "s":
+                        button.setIcon(blueSun);
+                        break;
+                    case "S":
+                        button.setIcon(yellowSun);
+                        break;
+                    default:
+                        break;
+                }
+                boardPanel.add(button);
+            } else {
+                button = new JButton();
+                button.addActionListener(new ButtonClickListener(this));
+                button.setActionCommand(String.valueOf(i));
+                boardPanel.add(button);
+            }
+            if (i % 2 == 0) {
+                button.setBackground(boardColor1);
+            } else {
+                button.setBackground(boardColor2);
+            }
+        }
+    
+        return boardPanel;
     }
 
     public boolean isFirstClick() {
@@ -226,6 +241,7 @@ public class gameviewer {
             
             System.out.println("Selected Position: " + selectedPosition);
             System.out.println("Selected ChessPiece: " + selectedPiece);
+            
             if (selectedPiece != null) {
                 gameView.setAllValidMoves(gamecontroller.isValidMove(selectedPiece, selectedPosition, gameView.gameBoard));
                 System.out.println(allValidMoves);
@@ -247,7 +263,7 @@ public class gameviewer {
                     System.out.println("move made");
                     System.out.println(gameView.updatedGameboard); 
                     gameView.setMoveMade(true); 
-                    break;
+                    
                 }
             }
             gameView.saveFirstSelect.remove(0);
