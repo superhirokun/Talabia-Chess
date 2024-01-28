@@ -20,7 +20,7 @@ public class gamecontroller extends BoardLogic{
                    continue;
                }else if(canSwitch == true){     //switch the time piece with the plus piece when the turn is even
                     if(prevPiecePosition.get(i) == gamer.plusPiece.get(i)){
-                        builder.placePiece(gamer,TimePiece.createTimePiece(gamer.plusPiece.get(i).getColor(), i), i);
+                        builder.placePiece(gamer,TimePiece.createTimePiece(gamer.timePiece.get(i).getColor(), i), i);
                     }else if(prevPiecePosition.get(i) == gamer.timePiece.get(i)){
                         builder.placePiece(gamer,PlusPiece.createPlusPiece(gamer.plusPiece.get(i).getColor(), i), i);
                     }
