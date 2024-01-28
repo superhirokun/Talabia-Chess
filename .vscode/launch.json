@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "encoder",
+            "request": "launch",
+            "mainClass": "model.encoder",
+            "projectName": "Talabia-Chess_59d6ef60"
+        },
+        {
             "request": "launch",
             "name": "Launch Program",
             "type": "node",

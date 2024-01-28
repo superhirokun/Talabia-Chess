@@ -69,7 +69,13 @@ public class BoardLogic {
     }
 
 
-    /*Should work further testing neeeded*/
+    public static boolean isYellowTurn(Integer turn){
+       if(turn%2 == 0){
+           return false;
+       }else{
+            return true;
+        }
+    }
 
 
     /**

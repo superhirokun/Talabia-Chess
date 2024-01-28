@@ -10,6 +10,9 @@ public class PlusPiece extends ChessPiece{
         super(PieceType.PLUS, color, position, false);
     }
 
+    public static PlusPiece createPlusPiece(Color color, int position) {
+        return new PlusPiece(color, position);
+    }
     /**
      * Calculates the valid moves for the PlusPiece on the given game board.
      * 

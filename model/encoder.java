@@ -11,10 +11,10 @@ public class encoder {
     BobTheBuilder builder = new BobTheBuilder();
     gameBoard.zaStarter(builder);
     System.out.println(gameBoard.getAllPiecePosition());
-    System.out.println(zaEncoder(gameBoard.getAllPiecePosition()));
+    System.out.println(zaEncoder(gameBoard.getAllPiecePosition(),6));
     }
 
-    public static String zaEncoder(HashMap<Integer, ChessPiece> zaHash) {
+    public static String zaEncoder(HashMap<Integer, ChessPiece> zaHash, Integer turn) {
         StringBuilder sb = new StringBuilder();
         int emptySquareCount = 0;
     
@@ -41,6 +41,9 @@ public class encoder {
         if (emptySquareCount != 0) {
             sb.append(emptySquareCount);
         }
+
+        String playerColor = BoardLogic.isYellowTurn(turn) ? "y" : "b";
+        sb.append(" " + playerColor + " " + turn);
     
         return sb.toString();
     }
