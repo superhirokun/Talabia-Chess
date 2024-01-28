@@ -142,6 +142,7 @@ public class gameviewer{
                     }
                     frame.add(board);
                     frame.pack(); //automatically resize the elements in the app to a certain suitable size
+                    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                     frame.setVisible(true);
                 });
                 
