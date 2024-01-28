@@ -61,6 +61,67 @@ public class gamecontroller extends BoardLogic{
         return zaBoardPiece;   
     }
 
+    /**
+     * Decodes the color from the given FEN string.
+     */
+    public static Color zaColorDecoder(String zaFEN){
+        String zaMover = zaFEN.split(" ")[1];
+        if(zaMover.equals("y")){
+            return Color.Yellow;
+        }else{
+            return Color.Blue;
+        }
+    }
+
+    /**
+     * Decodes the turn number from the given FEN string.
+     * 
+     * @param zaFEN the FEN string representing the chess position
+     * @return the turn number decoded from the FEN string
+     */
+    public static int zaTurnDecoder(String zaFEN){
+        String zaTurn = zaFEN.split(" ")[2];
+        return Integer.parseInt(zaTurn);
+    }
+
+    
+    /**
+     * Encodes a HashMap of ChessPieces into a String representation.
+     * 
+     * @param zaHash the HashMap containing the ChessPieces to be encoded
+     * @return the encoded String representation of the ChessPieces
+     */
+    public static String zaEncoder(HashMap<Integer, ChessPiece> zaHash) {
+        StringBuilder sb = new StringBuilder();
+        int emptySquareCount = 0;
+    
+        for (int i = 0; i < BoardLogic.totalSquare; i++) {
+            if (i != 0 && i % BoardLogic.numOfSquarePerRow == 0) {
+                if (emptySquareCount != 0) {
+                    sb.append(emptySquareCount);
+                    emptySquareCount = 0;
+                }
+                sb.append("/");
+            }
+    
+            if (zaHash.get(i) != null) {
+                if (emptySquareCount != 0) {
+                    sb.append(emptySquareCount);
+                    emptySquareCount = 0;
+                }
+                sb.append(zaHash.get(i).toString());
+            } else {
+                emptySquareCount++;
+            }
+        }
+    
+        if (emptySquareCount != 0) {
+            sb.append(emptySquareCount);
+        }
+    
+        return sb.toString();
+    }
+
     public static void startGame(){
         System.out.println("Game is starting...");
 
