@@ -13,15 +13,17 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class gameviewer{
+    private GameBoard gameBoard;
+
         public static void main(String[] args) {
-        gameviewer gameDisplay = new gameviewer();
+        gameviewer gameView = new gameviewer();
         int turnBruh = 0;
-        GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
-        gameDisplay.displayGame(gameBoard, turnBruh);
+        gameView.gameBoard= new GameBoard(new GameBoard.BobTheBuilder());
+        gameView.displayGame(gameView.gameBoard, turnBruh);
             
-while (!gameBoard.isSunPieceCaptured()) {
+while (!gameView.gameBoard.isSunPieceCaptured()) {
             BoardLogic.turnCounter(turnBruh); //increments counter 
-            gameBoard.isSunPieceCaptured(); //check if any sunpiece is captured (not sure if this works)
+            gameView.gameBoard.isSunPieceCaptured(); //check if any sunpiece is captured (not sure if this works)
             BoardLogic.zaSwitcher(); //check if next turn requires switching between plus and time piece
         }
 
@@ -85,7 +87,9 @@ while (!gameBoard.isSunPieceCaptured()) {
                         if (piecePositions.containsKey(i) && piecePositions.get(i) != null) {
                             piece = piecePositions.get(i).toString();
                             button = new JButton();
-                            button.addActionListener(new ButtonClickListener());
+                            button.setActionCommand(String.valueOf(i));
+                            ButtonClickListener buttonClickListener = new ButtonClickListener(this);
+                            button.addActionListener(buttonClickListener);
                             //place piece icon if there is a specific piece in that spot
                             switch (piece) {
                                 case "p":
@@ -125,7 +129,8 @@ while (!gameBoard.isSunPieceCaptured()) {
                         }
                         else{
                             button = new JButton();
-                            button.addActionListener(new ButtonClickListener());
+                            button.addActionListener(new ButtonClickListener(this));
+                            button.setActionCommand(String.valueOf(i));
                             board.add(button);
                         }
                         if (i % 2 == 0) {
@@ -146,19 +151,63 @@ while (!gameBoard.isSunPieceCaptured()) {
     }
 
 
-    public static class ButtonClickListener implements ActionListener{
-        private Color previousColor;
-        public void actionPerformed(ActionEvent e){
-            JButton sourceButton = (JButton) e.getSource();
-            sourceButton.setSelected(!sourceButton.isSelected());
-                if (sourceButton.isSelected()) {
-                previousColor = sourceButton.getBackground();
-                sourceButton.setBackground(Color.GREEN);
-                } else {
-                sourceButton.setBackground(previousColor);
-            }
+    public static class ButtonClickListener implements ActionListener {
+    private gameviewer gameView;
+    private ChessPiece selectedPiece;
+    private int selectedPosition;
+    private Color previousColor;
+    private boolean isFirstClick = true;
+
+    public ButtonClickListener(gameviewer gameView) {
+        this.gameView = gameView;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        JButton sourceButton = (JButton) e.getSource();
+
+        if (isFirstClick) {
+            handleFirstClick(sourceButton);
+        } else {
+            handleSecondClick(sourceButton);
         }
-        }
+    }
+
+    private void handleFirstClick(JButton sourceButton) {
+        sourceButton.setBackground(Color.GREEN);
+
+        // Fetch the key (position) and value (ChessPiece) of the selected button
+        selectedPosition = getButtonPosition(sourceButton);
+        selectedPiece = gameView.gameBoard.getPiecePosition().get(selectedPosition);
+
+        System.out.println("Selected Position: " + selectedPosition);
+        System.out.println("Selected ChessPiece: " + selectedPiece);
+        
+
+        isFirstClick = false;
+    }
+
+    private void handleSecondClick(JButton sourceButton) {
+        sourceButton.setBackground(previousColor);
+
+        // Fetch the destination position
+        int destinationPosition = getButtonPosition(sourceButton);
+
+        // Perform the move logic using selectedPiece and destinationPosition
+        // You may want to add a method in your game logic to handle this, e.g., gameView.gameBoard.makeMove(selectedPiece, destinationPosition);
+
+        System.out.println("Destination Position: " + destinationPosition);
+
+        // Reset state for the next move
+        selectedPiece = null;
+        selectedPosition = -1;
+        isFirstClick = true;
+    }
+
+    private int getButtonPosition(JButton button) {
+        // You can set the position as an action command when creating the button
+        return Integer.parseInt(button.getActionCommand());
+    }
+}
     
     public static class WindowCloseButton implements ActionListener{ //pop up for closing the game
         private JFrame appFrame;
