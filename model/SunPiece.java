@@ -10,7 +10,9 @@ public class SunPiece extends ChessPiece{
     SunPiece( Color color, int position) {
         super(PieceType.SUN, color, position, false);
     }
-    
+    public static SunPiece createSunPiece(Color color, int position) {
+        return new SunPiece(color, position);
+    }
     /**
      * Calculates the valid moves for the SunPiece on the given game board.
      * 

@@ -12,7 +12,9 @@ public class PointPiece extends ChessPiece{
     PointPiece(Color color, int position) {
         super(PieceType.POINT, color, position, false);     
     }
-
+    public static PointPiece createPointPiece(Color color, int position) {
+        return new PointPiece(color, position);
+    }
     /**
      * Calculates the valid moves for the current PointPiece on the given GameBoard.
      * 

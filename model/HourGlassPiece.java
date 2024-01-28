@@ -10,7 +10,9 @@ public class HourGlassPiece extends ChessPiece{
     HourGlassPiece(Color color, int position) {
         super(PieceType.HOURGLASS, color, position, false);
     }
-
+    public static HourGlassPiece createHourGlassPiece(Color color, int position) {
+        return new HourGlassPiece(color, position);
+    }
 
     /**
      * Calculates the valid moves for the HourGlassPiece on the given game board.
