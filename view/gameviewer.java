@@ -19,34 +19,32 @@ public class gameviewer{
         gameDisplay.displayGame();
     }
 
-    public void displayGame(){
-                //Builder boardBuilder = new Builder();
+    public void displayGame(){ //main method for board generation
                 GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
                 gameBoard.zaStarter(new BobTheBuilder());
                 HashMap<Integer, ChessPiece> piecePositions = gameBoard.getPiecePosition();
                 System.out.println(piecePositions); 
+                //set colour of the board to look like a chess board
                 Color boardColor1 = new Color(231, 237, 159);
                 Color boardColor2 = new Color(219, 164, 86); 
                 SwingUtilities.invokeLater(() ->{
-                    JFrame frame = new JFrame("Tabalia chess thing");
+                    JFrame frame = new JFrame("Tabalia chess"); //main application frame
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-                    JPanel options = new JPanel();
+                    JPanel options = new JPanel(); //panel for the game options
                     options.setBackground(Color.LIGHT_GRAY);
                     options.setPreferredSize(new Dimension(frame.getWidth(),30));
                     JButton save = new JButton("Save Game");
                     JButton load = new JButton("Load Previous Game");
                     JButton quit = new JButton("Quit Game");
                     
-                    //save.addActionListener(new saveButton());
                     quit.addActionListener(new WindowCloseButton());
                     options.add(save);
                     options.add(load);
                     options.add(quit);
-        
-        
                     frame.add(options, BorderLayout.NORTH);
-        
+                    
+                    //panel with the chess board
                     JPanel board = new JPanel();
                     board.setLayout(new GridLayout(6,7));
         
@@ -64,6 +62,10 @@ public class gameviewer{
                     ImageIcon blueTime = new ImageIcon("view/blueTime.png");
                     ImageIcon bluePlus = new ImageIcon("view/bluePlus.png");
                     ImageIcon blueSun = new ImageIcon("view/blueSun.png");
+
+                    //set the app icon
+                    Image appImage = yellowSun.getImage();
+                    frame.setIconImage(appImage);
                     
                     //Generate the board
                     String piece;
@@ -73,6 +75,7 @@ public class gameviewer{
                             piece = piecePositions.get(i).toString();
                             button = new JButton();
                             button.addActionListener(new ButtonClickListener());
+                            //place piece icon if there is a specific piece in that spot
                             switch (piece) {
                                 case "p":
                                     button.setIcon(rotatedBPoint);
@@ -114,6 +117,7 @@ public class gameviewer{
                             button.addActionListener(new ButtonClickListener());
                             board.add(button);
                         }
+                        //set the colour of the board background
                         if (i % 2 == 0) {
                             button.setBackground(boardColor1);
                         }
@@ -122,7 +126,7 @@ public class gameviewer{
                         }
                     }
                     frame.add(board);
-                    frame.pack();
+                    frame.pack(); //automatically resize the elements in the app to a certain suitable size
                     frame.setVisible(true);
                 });
                 
@@ -144,7 +148,7 @@ public class gameviewer{
         }
     }
 
-    public static class WindowCloseButton implements ActionListener{
+    public static class WindowCloseButton implements ActionListener{ //pop up for closing the game
         private JFrame appFrame;
 
         public void ActionListenerClass(JFrame frame){
@@ -159,7 +163,7 @@ public class gameviewer{
         }
     }
 
-    private static ImageIcon rotateImage(ImageIcon icon, double angle) {
+    private static ImageIcon rotateImage(ImageIcon icon, double angle) { //create rotated images of the point pieces 
         BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufferedImage.createGraphics();
         icon.paintIcon(null, g2d, 0, 0);
