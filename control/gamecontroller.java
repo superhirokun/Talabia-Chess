@@ -2,6 +2,7 @@ package control;
 import java.util.*;
 import model.*;
 import model.GameBoard.BobTheBuilder;
+import model.Color;
 
 public class gamecontroller extends BoardLogic{
     
@@ -135,6 +136,56 @@ public class gamecontroller extends BoardLogic{
         System.out.println("Reseti(french for reset)");
     }
 
+    public boolean isValidMove(ChessPiece piece, int sourcePosition, GameBoard gameBoard) {
+    // Check if the move is valid for the selected piece
+    switch ((piece.toString().charAt(0))) { //placeholder but it should check the piece in a selected tile, turn to string, and initiate switch case
+        case 'L':
+            // Handle PLUS piece
+            PlusPiece plusY = PlusPiece.createPlusPiece(Color.Yellow, sourcePosition); //should be the same for all others with slight variations
+            plusY.ValidMoves(gameBoard);
+            break;
+
+        case 'H':
+            // Handle HOURGLASS piece
+            break;
+
+        case 'T':
+            // Handle TIME piece
+            break;
+
+        case 'S':
+            // Handle SUN piece
+            break;
+
+        case 'P':
+            // Handle POINT piece
+            break;
+        case 'l':
+            // Handle PLUS piece
+            break;
+
+        case 'h':
+            // Handle HOURGLASS piece
+            break;
+
+        case 't':
+            // Handle TIME piece
+            break;
+
+        case 's':
+            // Handle SUN piece
+            break;
+
+        case 'p':
+            // Handle POINT piece
+            break;
+
+        default:
+            // Handle default case or return false if necessary
+            return false;
+    }
+    return true; // Placeholder, replace with your logic
+}
     public static void saveGame() {
            
     }
