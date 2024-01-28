@@ -1,27 +1,36 @@
 package model;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 import control.*;
 import model.GameBoard.BobTheBuilder;
+
+
 public class ZaTester{
     public static void main(String[] args) {
+        int turnBruh = 0;
         GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
         BobTheBuilder builder = new BobTheBuilder();
+        HashMap <Integer, ChessPiece> pieces = gameBoard.piecePosition;
         gameBoard.zaStarter(builder);
-        int turnBruh = 0;
-
-        System.out.println(Arrays.toString(gamecontroller.zaFENDecoder(GameBoard.StartingFEN)));
+        
+        //System.out.println(Arrays.toString(gamecontroller.zaFENDecoder(GameBoard.StartingFEN)));
         
         
         while (!gameBoard.isSunPieceCaptured()) {
+            //display board every move 
+            for (ChessPiece piece : pieces.values()) {
+                /*
+                
+                if (selectedTile.get(ChessPiece) == piece) { ()
+                    piece = selectedTile(ChessPiece) ie : piece = selectedTile(P);
+                    gamecontroller.makeMoveBoardLogic(piece, 0, gameBoard); // make move (this shit dont work)(idk what to place null with)
+                }
+                */
+                // replace null with piece
+                
+                
+            }
+            // user select a piece  
             
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter ur move ig : ");
-            //Integer test = scanner.nextInt();
-            //ChessPiece test1 = builder.piecePosition.get(test);
-            // user select a piece 
-            
-            gamecontroller.makeMoveBoardLogic(null, 0, gameBoard);
 
             BoardLogic.turnCounter(turnBruh); //increments counter 
             BoardLogic.zaSwitcher(); //check if next turn requires switching between plus and time piece

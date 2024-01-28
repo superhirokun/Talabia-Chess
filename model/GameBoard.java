@@ -38,9 +38,6 @@ public class GameBoard {
         displayBoard();   
     }
     
-    public void ZaSaver(BobTheBuilder builder){
-        boardSetting(builder,gamecontroller.zaFENEncoder(SavingFEN));
-    }
 
 
     //Method
