@@ -5,6 +5,7 @@ import model.GameBoard.BobTheBuilder;
 
 public class gamecontroller extends BoardLogic{
     
+    /*make a move by generating a new board */
     public static GameBoard makeMoveBoardLogic(ChessPiece piece, int destination, GameBoard gamer){   //make the move
         BobTheBuilder builder = new BobTheBuilder();
         int initialPosition = piece.getPosition();
@@ -35,6 +36,7 @@ public class gamecontroller extends BoardLogic{
         return builder.build();
     }
 
+    /*decode the fen string into  */
     public static String[] zaFENDecoder(String zaFEN){
         String zaFENString = zaFEN.split(" ")[0];
         int zalength = zaFENString.length();
