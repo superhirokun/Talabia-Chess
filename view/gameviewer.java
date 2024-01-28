@@ -133,7 +133,7 @@ public class gameviewer{
                             button.addActionListener(new ButtonClickListener());
                             board.add(button);
                         }
-                        if (i % 2 == 0) {//cunny 😭😭😭
+                        if (i % 2 == 0) {
                             button.setBackground(boardColor1);
                         }
                         else{
