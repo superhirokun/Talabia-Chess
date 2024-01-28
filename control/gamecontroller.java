@@ -147,44 +147,62 @@ public class gamecontroller extends BoardLogic{
 
         case 'H':
             // Handle HOURGLASS piece
+            HourGlassPiece hourglassY = HourGlassPiece.createHourGlassPiece(Color.Yellow, sourcePosition); 
+            hourglassY.ValidMoves(gameBoard);
             break;
 
         case 'T':
             // Handle TIME piece
+            TimePiece timeY = TimePiece.createTimePiece(Color.Yellow, sourcePosition);
+            timeY.ValidMoves(gameBoard);
             break;
 
         case 'S':
             // Handle SUN piece
+            SunPiece sunY = SunPiece.createSunPiece(Color.Yellow, sourcePosition);
+            sunY.ValidMoves(gameBoard);
             break;
 
         case 'P':
             // Handle POINT piece
+            PointPiece pointY = PointPiece.createPointPiece(Color.Yellow, sourcePosition);
+            pointY.ValidMoves(gameBoard);
             break;
         case 'l':
-            // Handle PLUS piece
+            // Handle PLUS piece (Blue)
+            PlusPiece plusB = PlusPiece.createPlusPiece(Color.Blue, sourcePosition); //should be the same for all others with slight variations
+            plusB.ValidMoves(gameBoard);
             break;
 
         case 'h':
             // Handle HOURGLASS piece
+            HourGlassPiece hourglassB = HourGlassPiece.createHourGlassPiece(Color.Blue, sourcePosition); //should be the same for all others with slight variations
+            hourglassB.ValidMoves(gameBoard);
             break;
 
         case 't':
             // Handle TIME piece
+            TimePiece timeB = TimePiece.createTimePiece(Color.Blue, sourcePosition);
+            timeB.ValidMoves(gameBoard);
             break;
 
         case 's':
             // Handle SUN piece
+            SunPiece sunB = SunPiece.createSunPiece(Color.Blue, sourcePosition);
+            sunB.ValidMoves(gameBoard);
             break;
 
         case 'p':
             // Handle POINT piece
+            PointPiece pointB = PointPiece.createPointPiece(Color.Blue, sourcePosition);
+            pointB.ValidMoves(gameBoard);
             break;
 
         default:
             // Handle default case or return false if necessary
             return false;
     }
-    return true; // Placeholder, replace with your logic
+    return true; // Placeholder, replace later
 }
     public static void saveGame() {
            
