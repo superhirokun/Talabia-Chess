@@ -34,11 +34,10 @@ public class gameviewer{
     }
 
     public void displayGame(GameBoard gameBoard, int turnCheck){
-                //Builder boardBuilder = new Builder();
                 if (turnCheck == 0) {
                     gameBoard.zaStarter(new BobTheBuilder()); //prints starter board
                 }
-                gameBoard.
+                //gameBoard.
                 HashMap<Integer, ChessPiece> piecePositions = gameBoard.getPiecePosition();
                 System.out.println(piecePositions); 
                 //set colour of the board to look like a chess board
