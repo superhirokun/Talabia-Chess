@@ -91,7 +91,7 @@ public class gamecontroller extends BoardLogic{
      * @param zaHash the HashMap containing the ChessPieces to be encoded
      * @return the encoded String representation of the ChessPieces
      */
-    public static String zaEncoder(HashMap<Integer, ChessPiece> zaHash) {
+    public static String zaEncoder(HashMap<Integer, ChessPiece> zaHash, Integer turn) {
         StringBuilder sb = new StringBuilder();
         int emptySquareCount = 0;
     
@@ -118,6 +118,9 @@ public class gamecontroller extends BoardLogic{
         if (emptySquareCount != 0) {
             sb.append(emptySquareCount);
         }
+
+        String playerColor = BoardLogic.isYellowTurn(turn) ? "y" : "b";
+        sb.append(" " + playerColor + " " + turn);
     
         return sb.toString();
     }
