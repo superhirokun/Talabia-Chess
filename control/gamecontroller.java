@@ -22,7 +22,7 @@ public class gamecontroller extends BoardLogic{
                     if(prevPiecePosition.get(i) == gamer.plusPiece.get(i)){
                         builder.placePiece(gamer,TimePiece.createTimePiece(gamer.plusPiece.get(i).getColor(), i), i);
                     }else if(prevPiecePosition.get(i) == gamer.timePiece.get(i)){
-                        builder.placePiece(gamer,TimePiece.createTimePiece(gamer.plusPiece.get(i).getColor(), i), i);
+                        builder.placePiece(gamer,PlusPiece.createPlusPiece(gamer.plusPiece.get(i).getColor(), i), i);
                     }
                }
                else{
