@@ -13,13 +13,13 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class gameviewer{
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         gameviewer gameDisplay = new gameviewer();
         int turnBruh = 0;
         GameBoard gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
         gameDisplay.displayGame(gameBoard, turnBruh);
-
-        while (!gameBoard.isSunPieceCaptured()) {
+            
+while (!gameBoard.isSunPieceCaptured()) {
             BoardLogic.turnCounter(turnBruh); //increments counter 
             gameBoard.isSunPieceCaptured(); //check if any sunpiece is captured (not sure if this works)
             BoardLogic.zaSwitcher(); //check if next turn requires switching between plus and time piece
@@ -32,7 +32,7 @@ public class gameviewer{
                 if (turnCheck == 0) {
                     gameBoard.zaStarter(new BobTheBuilder()); //prints starter board
                 }
-                //gameBoard.
+//gameBoard.
                 HashMap<Integer, ChessPiece> piecePositions = gameBoard.getPiecePosition();
                 System.out.println(piecePositions); 
                 //set colour of the board to look like a chess board
@@ -151,15 +151,15 @@ public class gameviewer{
         public void actionPerformed(ActionEvent e){
             JButton sourceButton = (JButton) e.getSource();
             sourceButton.setSelected(!sourceButton.isSelected());
-            if (sourceButton.isSelected()) {
+                if (sourceButton.isSelected()) {
                 previousColor = sourceButton.getBackground();
                 sourceButton.setBackground(Color.GREEN);
-            } else {
+                } else {
                 sourceButton.setBackground(previousColor);
             }
         }
-    }
-
+        }
+    
     public static class WindowCloseButton implements ActionListener{ //pop up for closing the game
         private JFrame appFrame;
 
