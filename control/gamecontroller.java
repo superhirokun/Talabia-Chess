@@ -25,6 +25,8 @@ public class gamecontroller extends BoardLogic{
                         builder.placePiece(gamer,TimePiece.createTimePiece(gamer.timePiece.get(i).getColor(), i), i);
                     }else if(prevPiecePosition.get(i) == gamer.timePiece.get(i)){
                         builder.placePiece(gamer,PlusPiece.createPlusPiece(gamer.plusPiece.get(i).getColor(), i), i);
+                    }else{
+                        builder.placePiece(gamer,prevPiecePosition.get(i), i);
                     }
                }
                else{
