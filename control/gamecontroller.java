@@ -24,8 +24,11 @@ public class gamecontroller extends BoardLogic{
            if(prevPiecePosition.get(i) != null){    //check if the piece is not null
                if(prevPiecePosition.get(i).getPosition() == initialPosition){
                    prevPiecePosition.get(i).setPosition(destination);   //set the position of the piece to the new position which is the destination
+                   System.out.println(prevPiecePosition);
                    builder.placePiece(gamer,prevPiecePosition.get(i), destination);
+                   System.out.println(prevPiecePosition);
                    builder.placePiece(gamer,null, i);
+                   System.out.println(prevPiecePosition);
                }else if(prevPiecePosition.get(i).getPosition() == destination && prevPiecePosition.get(i).getCaptured() == true){   //check if the piece is captured
                    continue;
                }else if(canSwitch == true){     //switch the time piece with the plus piece when the turn is even

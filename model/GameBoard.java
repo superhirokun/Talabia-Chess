@@ -220,7 +220,7 @@ public class GameBoard {
                 board.piecePosition.put(piece.getPosition(), piece);
             } else {
                 this.bobsBoard[position] = "-";
-
+                board.piecePosition.remove(position);
             }
             return this;
         }
