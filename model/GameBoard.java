@@ -229,16 +229,6 @@ public class GameBoard {
             return new GameBoard(this);
         }
 
-        // public void placePiece(TimePiece timePiece, int i) {
-        //     // TODO Auto-generated method stub
-        //     throw new UnsupportedOperationException("Unimplemented method 'placePiece'");
-        // }
-
-        // public void placePiece(ChessPiece chessPiece, int destination) {
-        //     // TODO Auto-generated method stub
-        //     throw new UnsupportedOperationException("Unimplemented method 'placePiece'");
-        // }
-
     }
 
     public HashMap<Integer, ChessPiece> getPiecePosition(){

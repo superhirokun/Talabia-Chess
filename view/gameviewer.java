@@ -91,8 +91,8 @@ public class gameviewer {
                 }
                 int turn = BoardLogic.turnCounter(gameView.turnBruh); // increments counter
                 System.out.println("turn counter : " + turn);
+                BoardLogic.zaSwitcher(gameView.turnBruh); // check if the next turn requires switching between plus and time piece
                 gameView.turnBruh++;
-                BoardLogic.zaSwitcher(); // check if the next turn requires switching between plus and time piece
                 gameView.refreshBoard(gameView.updatedGameboard, turn); //still doesnt display correctly
                 gameView.setMoveMade(false);  // Reset the flag after updating the game board
                 gameView.setFirstClick(true);
