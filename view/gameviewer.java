@@ -331,6 +331,43 @@ public class gameviewer {
                 System.exit(0);
             }
         }
+
+    }
+
+    public static class save {
+        private JFrame appFrame;
+
+        public void ActionListenerClass(JFrame frame) {
+            this.appFrame = frame;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            int confirmation = JOptionPane.showConfirmDialog(appFrame, 
+            "Save Ongoing Game?",
+            "saveGame" , JOptionPane.YES_NO_OPTION);
+        if (confirmation == JOptionPane.YES_OPTION) {
+            gamecontroller.saveGame(null, null);
+            System.exit(0);
+        }
+        }
+    }
+
+    public static class load {
+        private JFrame appFrame;
+
+        public void ActionListenerClass(JFrame frame) {
+            this.appFrame = frame;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            int confirmation = JOptionPane.showConfirmDialog(appFrame, 
+            "Load Previous Game?",
+            "loadGame" , JOptionPane.YES_NO_OPTION);
+        if (confirmation == JOptionPane.YES_OPTION) {
+            gamecontroller.loadGame();
+            System.exit(0);
+        }
+        }
     }
 
     private static ImageIcon rotateImage(ImageIcon icon, double angle) {

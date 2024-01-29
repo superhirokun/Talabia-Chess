@@ -9,6 +9,13 @@
             "name": "gameviewer",
             "request": "launch",
             "mainClass": "view.gameviewer",
+            "projectName": "Talabia-Chess-4_9e8065ad"
+        },
+        {
+            "type": "java",
+            "name": "gameviewer",
+            "request": "launch",
+            "mainClass": "view.gameviewer",
             "projectName": "Talabia-Chess_8b3c22ba"
         },
         {
