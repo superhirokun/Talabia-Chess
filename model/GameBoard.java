@@ -115,6 +115,10 @@ public class GameBoard {
         }
         return pieceOnBoard;
     }
+
+    private HashMap<Integer, ChessPiece> setPlusPiece(){
+        return null;
+    }
     
     //Getter
     public String[] getBoard(){
