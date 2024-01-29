@@ -93,7 +93,7 @@ public class ZaTester{
 
             BoardLogic.turnCounter(turnBruh); //increments counter 
             turnBruh = BoardLogic.getTurn();
-            //BoardLogic.zaSwitcher(); //check if next turn requires switching between plus and time piece
+            BoardLogic.zaSwitcher(turnBruh); //check if next turn requires switching between plus and time piece
             
         }
         
