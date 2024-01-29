@@ -9,6 +9,7 @@ import java.util.*;
 //push the code again homie, ur previous code didnt save the previous color so i edited it abit
 import model.*;
 import model.GameBoard.BobTheBuilder;
+import view.gameviewer;
 
 public class gamecontroller extends BoardLogic{
     static BobTheBuilder building = new BobTheBuilder();
@@ -250,10 +251,10 @@ public class gamecontroller extends BoardLogic{
         }
     }
 
-    public static void loadGame() {
+    public static String loadGame() {
         // Specify the file path
         String filePath = "saveFile.txt";
-
+        String test = "-1";
         // Read the FEN string from the file
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String fenString = reader.readLine();
@@ -262,15 +263,16 @@ public class gamecontroller extends BoardLogic{
                 // Decode the FEN string
                 System.out.println(fenString);
                 String[] decodedFEN = zaFENDecoder(fenString);
-                
-                
-                System.out.println("Game loaded from " + filePath);
+                test = decodedFEN.toString();
+                return test;
             } else {
                 System.out.println("The file is empty.");
+                return test;
             }
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error loading the game.");
+            return test;
         }
 
         

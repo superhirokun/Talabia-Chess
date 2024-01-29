@@ -50,6 +50,7 @@ public class gameviewer {
         this.moveMade = moveMade;
     }
     JFrame frame = new JFrame("Tilapia Chess");
+    
     JPanel boardPanel;
 
     public static void main(String[] args) {
@@ -57,8 +58,8 @@ public class gameviewer {
         gameView.gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
         
         gameView.displayGame(gameView.gameBoard, gameView.turnBruh);
-        gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh);
-        gamecontroller.loadGame();
+        //gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh);
+        //gamecontroller.loadGame();
 
         //Options pane creation, unchanging throughout the game
         JPanel options = new JPanel(); // panel for the game options
@@ -67,7 +68,9 @@ public class gameviewer {
             JButton save = new JButton("Save Game");
             JButton load = new JButton("Load Previous Game");
             JButton quit = new JButton("Quit Game");
-    
+
+            save.addActionListener(new SaveButton(gameView));
+            load.addActionListener(new LoadButton());
             quit.addActionListener(new WindowCloseButton());
             options.add(save);
             options.add(load);
@@ -110,15 +113,15 @@ public class gameviewer {
         HashMap<Integer, ChessPiece> piecePositions = gameBoard.getPiecePosition();
         System.out.println(piecePositions);
         // set the color of the board to look like a chessboard
-        Color boardColor1 = new Color(231, 237, 159);
-        Color boardColor2 = new Color(219, 164, 86);
+        Color yellow = new Color(231, 237, 159);
+        Color blue = new Color(219, 164, 86);
         
         SwingUtilities.invokeLater(() -> {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             ImageIcon appIcon = new ImageIcon("view/yellowSun.png");
     
             // Create a new panel with the chess board
-            JPanel boardPanel = createBoardPanel(piecePositions, boardColor1, boardColor2);
+            JPanel boardPanel = createBoardPanel(piecePositions, yellow, blue);
             
             // Remove the existing boardPanel from the frame's content pane
             int panelcount = 0;
@@ -331,12 +334,17 @@ public class gameviewer {
                 System.exit(0);
             }
         }
+        
 
     }
 
-    public static class save {
+    public static class SaveButton implements ActionListener {
         private JFrame appFrame;
-
+        private gameviewer gameView;
+        
+        public SaveButton(gameviewer gameView) {
+            this.gameView = gameView;
+        }
         public void ActionListenerClass(JFrame frame) {
             this.appFrame = frame;
         }
@@ -346,13 +354,13 @@ public class gameviewer {
             "Save Ongoing Game?",
             "saveGame" , JOptionPane.YES_NO_OPTION);
         if (confirmation == JOptionPane.YES_OPTION) {
-            gamecontroller.saveGame(null, null);
+            gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh);
             System.exit(0);
         }
         }
     }
 
-    public static class load {
+    public static class LoadButton implements ActionListener {
         private JFrame appFrame;
 
         public void ActionListenerClass(JFrame frame) {
@@ -364,8 +372,8 @@ public class gameviewer {
             "Load Previous Game?",
             "loadGame" , JOptionPane.YES_NO_OPTION);
         if (confirmation == JOptionPane.YES_OPTION) {
-            gamecontroller.loadGame();
-            System.exit(0);
+            String decodedFEN = gamecontroller.loadGame();
+            
         }
         }
     }

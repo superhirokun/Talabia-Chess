@@ -37,6 +37,12 @@ public class GameBoard {
         boardCreator(builder);
         displayBoard();   
     }
+
+    public void zaLoader(BobTheBuilder builder){
+        boardSetting(builder,gamecontroller.zaFENDecoder(StartingFEN));
+        boardCreator(builder);
+        displayBoard();   
+    }
     
     
 
