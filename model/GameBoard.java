@@ -236,10 +236,6 @@ public class GameBoard {
     }
 
     public boolean isSunPieceCaptured() {
-        System.out.println("piece position : ");
-        System.out.println(piecePosition);
-        System.out.println("getAllPiecePosition : ");
-        System.out.println(getAllPiecePosition().values());
         
         Collection<ChessPiece> pieces = new ArrayList<>(piecePosition.values());
         for (ChessPiece piece : pieces) {

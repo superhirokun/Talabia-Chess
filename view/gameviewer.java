@@ -1,4 +1,5 @@
 package view;
+
 import javax.swing.*;
 
 import control.gamecontroller;
@@ -27,13 +28,12 @@ public class gameviewer {
     ImageIcon previousImageIcon;
     int previousLocation = 0;
     CountDownLatch latch = new CountDownLatch(1);
-    
+
     public gameviewer() {
         this.saveFirstSelect = new ArrayList<>();
         this.moveMade = false;
         this.turnBruh = 0;
     }
-    
 
     public ArrayList<Integer> getAllValidMoves() {
         return allValidMoves;
@@ -50,6 +50,7 @@ public class gameviewer {
     public void setMoveMade(boolean moveMade) {
         this.moveMade = moveMade;
     }
+
     JFrame frame = new JFrame("Tilapia Chess");
     JPanel boardPanel = new JPanel();
     JPanel options = new JPanel();;
@@ -57,10 +58,10 @@ public class gameviewer {
     public static void main(String[] args) {
         gameviewer gameView = new gameviewer();
         gameView.gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
-        
+
         gameView.displayGame(gameView.gameBoard, gameView.turnBruh);
-            boolean sunPieceCaptured = false;
-        
+        boolean sunPieceCaptured = false;
+
         while (!gameView.gameBoard.isSunPieceCaptured()) {
             try {
                 // Wait until the countdown latch reaches 0
@@ -69,25 +70,25 @@ public class gameviewer {
                 e.printStackTrace();
             }
             if (gameView.isMoveMade() == true && !gameView.isFirstClick() && gameView.saveFirstSelect.isEmpty()) {
-                if (!gameView.isMoveMade() || gameView.isFirstClick() || !gameView.saveFirstSelect.isEmpty()) {   
+                if (!gameView.isMoveMade() || gameView.isFirstClick() || !gameView.saveFirstSelect.isEmpty()) {
                 }
                 int turn = BoardLogic.turnCounter(gameView.turnBruh); // increments counter
                 System.out.println("turn counter : " + turn);
                 gameView.turnBruh++;
-                BoardLogic.zaSwitcher(gameView.turnBruh); // check if the next turn requires switching between plus and time piece
-                gameView.refreshBoard(gameView.updatedGameboard, turn); //still doesnt display correctly
-                gameView.setMoveMade(false);  // Reset the flag after updating the game board
+                BoardLogic.zaSwitcher(gameView.turnBruh); // check if the next turn requires switching between plus and
+                                                          // time piece
+                gameView.refreshBoard(gameView.updatedGameboard, turn); // still doesnt display correctly
+                gameView.setMoveMade(false); // Reset the flag after updating the game board
                 gameView.setFirstClick(true);
                 gameView.latch = new CountDownLatch(1);
             }
-            
-            sunPieceCaptured = gameView.gameBoard.isSunPieceCaptured(); // check if any sunpiece is captured
-            
 
-             if (sunPieceCaptured == true) {
-                 JOptionPane.showMessageDialog(null, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-                 break;
-             }      
+            sunPieceCaptured = gameView.gameBoard.isSunPieceCaptured(); // check if any sunpiece is captured
+
+            if (sunPieceCaptured == true) {
+                JOptionPane.showMessageDialog(null, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                break;
+            }
         }
     }
 
@@ -100,30 +101,30 @@ public class gameviewer {
         // set the color of the board to look like a chessboard
         Color yellow = new Color(231, 237, 159);
         Color blue = new Color(219, 164, 86);
-        
+
         SwingUtilities.invokeLater(() -> {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             ImageIcon appIcon = new ImageIcon("view/yellowSun.png");
-            
-        //Options pane creation, unchanging throughout the game
-        frame.add(options);
-        frame.remove(options);
-        options = new JPanel(); // panel for the game options
-        options.setBackground(Color.LIGHT_GRAY);
-        options.setPreferredSize(new Dimension(frame.getWidth(), 30));
-        JButton save = new JButton("Save Game");
-        JButton load = new JButton("Load Previous Game");
-        JButton quit = new JButton("Quit Game");
 
-        quit.addActionListener(new WindowCloseButton());
-        save.addActionListener(new SaveButton(this));
-        load.addActionListener(new LoadButton());
-        options.add(save);
-        options.add(load);
-        options.add(quit);
-        frame.add(options, BorderLayout.NORTH);
-        frame.add(boardPanel);
-        frame.remove(boardPanel);
+            // options pane creation, unchanging throughout the game
+            frame.add(options);
+            frame.remove(options);
+            options = new JPanel(); // panel for the game options
+            options.setBackground(Color.LIGHT_GRAY);
+            options.setPreferredSize(new Dimension(frame.getWidth(), 30));
+            JButton save = new JButton("Save Game");
+            JButton load = new JButton("Load Previous Game");
+            JButton quit = new JButton("Quit Game");
+
+            quit.addActionListener(new WindowCloseButton());
+            save.addActionListener(new SaveButton(this));
+            load.addActionListener(new LoadButton());
+            options.add(save);
+            options.add(load);
+            options.add(quit);
+            frame.add(options, BorderLayout.NORTH);
+            frame.add(boardPanel);
+            frame.remove(boardPanel);
             // Create a new panel with the chess board
             JPanel boardPanel = createBoardPanel(piecePositions, yellow, blue);
 
@@ -140,7 +141,7 @@ public class gameviewer {
         // Create a new panel with the chess board
         boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(6, 7));
-    
+
         // yellow pieces
         ImageIcon yellowPoint = new ImageIcon("view/yellowPoint.png");
         ImageIcon rotatedYPoint = rotateImage(yellowPoint, Math.PI);
@@ -155,7 +156,7 @@ public class gameviewer {
         ImageIcon blueTime = new ImageIcon("view/blueTime.png");
         ImageIcon bluePlus = new ImageIcon("view/bluePlus.png");
         ImageIcon blueSun = new ImageIcon("view/blueSun.png");
-    
+
         // Generate the board
         String piece;
         for (int i = 0; i < 42; i++) {
@@ -217,14 +218,14 @@ public class gameviewer {
         return boardPanel;
     }
 
-    private JPanel refreshBoard(GameBoard gameBoard, int turnCheck){
+    private JPanel refreshBoard(GameBoard gameBoard, int turnCheck) {
         boardPanel.removeAll();
         options.removeAll();
         displayGame(gameBoard, turnCheck);
         return boardPanel;
     }
 
-    //clicks handling
+    // clicks handling
 
     public boolean isFirstClick() {
         return isFirstClick;
@@ -251,7 +252,7 @@ public class gameviewer {
             if (gameView.isFirstClick()) {
                 handleFirstClick(sourceButton);
             } else {
-                handleSecondClick(sourceButton); 
+                handleSecondClick(sourceButton);
             }
         }
 
@@ -261,17 +262,17 @@ public class gameviewer {
             int selectedPosition = getButtonPosition(sourceButton);
             ChessPiece selectedPiece = gameView.gameBoard.getPiecePosition().get(selectedPosition);
             gameView.saveFirstSelect.add(selectedPiece);
-            
+
             System.out.println("Selected Position: " + selectedPosition);
             System.out.println("Selected ChessPiece: " + selectedPiece);
-            
+
             if (selectedPiece != null) {
-                gameView.setAllValidMoves(gamecontroller.isValidMove(selectedPiece, selectedPosition, gameView.gameBoard));
+                gameView.setAllValidMoves(
+                        gamecontroller.isValidMove(selectedPiece, selectedPosition, gameView.gameBoard));
                 System.out.println(allValidMoves);
                 sourceButton.setBackground(Color.GREEN);
                 gameView.setFirstClick(false);
-                }
-            else{
+            } else {
                 gameView.setFirstClick(true);
             }
         }
@@ -285,10 +286,11 @@ public class gameviewer {
             for (int i = 0; i < allValidMoves.size(); i++) {
                 if (destinationPosition == allValidMoves.get(i)) {
                     sourceButton.setBackground(Color.BLUE);
-                    gameView.updatedGameboard = gamecontroller.makeMoveBoardLogic(gameView.saveFirstSelect.get(0), destinationPosition, gameView.gameBoard);
+                    gameView.updatedGameboard = gamecontroller.makeMoveBoardLogic(gameView.saveFirstSelect.get(0),
+                            destinationPosition, gameView.gameBoard);
                     System.out.println("move made");
-                    System.out.println(gameView.updatedGameboard); 
-                    gameView.setMoveMade(true); 
+                    System.out.println(gameView.updatedGameboard);
+                    gameView.setMoveMade(true);
                     gameView.latch.countDown();
                     gameView.saveFirstSelect.remove(0);
                     selectedPiece = null;
@@ -298,10 +300,10 @@ public class gameviewer {
             }
             if (!gameView.moveMade) {
                 gameView.gameBoard = previousGameBoard;
-                JOptionPane.showMessageDialog(null, "Invalid Move", "Move error" , JOptionPane.ERROR_MESSAGE);
-            }   
+                JOptionPane.showMessageDialog(null, "Invalid Move", "Move error", JOptionPane.ERROR_MESSAGE);
+            }
         }
-        
+
         private int getButtonPosition(JButton button) {
             return Integer.parseInt(button.getActionCommand());
         }
@@ -322,31 +324,31 @@ public class gameviewer {
                 System.exit(0);
             }
         }
-        
 
     }
 
     public static class SaveButton implements ActionListener {
         private JFrame appFrame;
         private gameviewer gameView;
-        
+
         public SaveButton(gameviewer gameView) {
             this.gameView = gameView;
         }
+
         public void ActionListenerClass(JFrame frame) {
             this.appFrame = frame;
         }
 
         public void actionPerformed(ActionEvent e) {
-            int confirmation = JOptionPane.showConfirmDialog(appFrame, 
-            "Save Ongoing Game?",
-            "saveGame" , JOptionPane.YES_NO_OPTION);
-        if (confirmation == JOptionPane.YES_OPTION) {
-            String saveName = JOptionPane.showInputDialog(null, "Enter save file name here: ");
-            saveName += ".txt";
-            gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh,saveName);
-            System.exit(0);
-        }
+            int confirmation = JOptionPane.showConfirmDialog(appFrame,
+                    "Save Ongoing Game?",
+                    "saveGame", JOptionPane.YES_NO_OPTION);
+            if (confirmation == JOptionPane.YES_OPTION) {
+                String saveName = JOptionPane.showInputDialog(null, "Enter save file name here: ");
+                saveName += ".txt";
+                gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh, saveName);
+                System.exit(0);
+            }
         }
     }
 
@@ -358,15 +360,15 @@ public class gameviewer {
         }
 
         public void actionPerformed(ActionEvent e) {
-            int confirmation = JOptionPane.showConfirmDialog(appFrame, 
-            "Load Previous Game?",
-            "loadGame" , JOptionPane.YES_NO_OPTION);
-        if (confirmation == JOptionPane.YES_OPTION) {
-            String loadName = JOptionPane.showInputDialog(null, "Enter save file to be loaded here(exclude.txt): ");
-            loadName += ".txt";
-            String decodedFEN = gamecontroller.loadGame(loadName);
-            
-        }
+            int confirmation = JOptionPane.showConfirmDialog(appFrame,
+                    "Load Previous Game?",
+                    "loadGame", JOptionPane.YES_NO_OPTION);
+            if (confirmation == JOptionPane.YES_OPTION) {
+                String loadName = JOptionPane.showInputDialog(null, "Enter save file to be loaded here(exclude.txt): ");
+                loadName += ".txt";
+                String decodedFEN = gamecontroller.loadGame(loadName);
+                // code to generate the new board
+            }
         }
     }
 
