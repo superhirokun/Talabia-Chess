@@ -25,7 +25,7 @@ public class encoderTest {
         // Add more chess pieces to the HashMap
         
         // Call the zaEncoder method
-        String encodedString = encoder.zaEncoder(zaHash);
+        String encodedString = encoder.zaEncoder(zaHash,2);
         
         // Assert that the encoded string is as expected
         String expectedEncodedString = "RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr";
