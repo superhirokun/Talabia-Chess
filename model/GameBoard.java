@@ -116,8 +116,44 @@ public class GameBoard {
         return pieceOnBoard;
     }
 
-    private HashMap<Integer, ChessPiece> setPlusPiece(){
-        return null;
+    public HashMap<Integer, ChessPiece> setPlusPiece(String[] boarding){
+        HashMap<Integer, ChessPiece> plusPiece = new HashMap<Integer, ChessPiece>();
+        for(int i = 0; i < BoardLogic.totalSquare; i++){
+            switch (boarding[i]) {
+                case "l":
+                plusPiece.put(i, new PlusPiece(Color.Blue, i));
+                break;
+            case "t":
+                timePiece.put(i, new TimePiece(Color.Blue, i));
+                break;
+            case "L":
+                plusPiece.put(i, new PlusPiece(Color.Yellow, i));
+                break;
+            case "T":
+                timePiece.put(i, new TimePiece(Color.Yellow, i));
+                break;
+            default:
+                break;
+            }
+        }
+        return plusPiece;
+    }
+
+    public HashMap<Integer, ChessPiece>setTimePiece(String[] boarding){
+        HashMap<Integer, ChessPiece> timePiece = new HashMap<Integer, ChessPiece>();
+        for(int i = 0; i < BoardLogic.totalSquare; i++){
+            switch (boarding[i]) {
+            case "t":
+                timePiece.put(i, new TimePiece(Color.Blue, i));
+                break;
+            case "T":
+                timePiece.put(i, new TimePiece(Color.Yellow, i));
+                break;
+            default:
+                break;
+            }
+        }
+        return timePiece;
     }
     
     //Getter

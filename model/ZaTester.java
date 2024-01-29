@@ -28,19 +28,24 @@ public class ZaTester{
             if(turnBruh ==1){
                 ChessPiece piece = pieces.get(pieceToMove);
                 newBoard = gamecontroller.makeMoveBoardLogic(piece, destination, gameBoard);
-                System.out.println(newBoard.plusPiece);
+                System.out.println(gameBoard.plusPiece);
                 newBoard.plusPiece = gameBoard.plusPiece;
                 newBoard.timePiece = gameBoard.timePiece;
                 System.out.println(newBoard.plusPiece);
+                
             }else{
                 HashMap <Integer, ChessPiece> newPieces = newBoard.piecePosition;
                 ChessPiece piece = newPieces.get(pieceToMove);
                 System.out.println(newBoard.plusPiece);
                 newBoard = gamecontroller.makeMoveBoardLogic(piece, destination, newBoard);
+               
+                newBoard.plusPiece = newBoard.setPlusPiece(newBuilder.bobsBoard);
+                newBoard.timePiece = newBoard.setTimePiece(newBuilder.bobsBoard);
                 System.out.println(newBoard.plusPiece);
             }
             //BoardLogic.capturedZAPiece(builder, destination);
             newBuilder = gamecontroller.getBob();
+
             System.out.println(gameBoard.getAllPiecePosition());
             System.out.println(newBuilder.piecePosition);
             System.out.println(newBoard.getAllPiecePosition());
