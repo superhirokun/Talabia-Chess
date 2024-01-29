@@ -2,6 +2,7 @@ package view;
 import javax.swing.*;
 
 import control.gamecontroller;
+import javafx.scene.layout.Border;
 import model.ChessPiece;
 import model.GameBoard;
 import model.GameBoard.BobTheBuilder;
@@ -57,21 +58,7 @@ public class gameviewer {
         
         gameView.gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
         gameView.displayGame(gameView.gameBoard, gameView.turnBruh);
-
-        //Options pane creation, unchanging throughout the game
-        JPanel options = new JPanel(); // panel for the game options
-            options.setBackground(Color.LIGHT_GRAY);
-            options.setPreferredSize(new Dimension(gameView.frame.getWidth(), 30));
-            JButton save = new JButton("Save Game");
-            JButton load = new JButton("Load Previous Game");
-            JButton quit = new JButton("Quit Game");
-    
-            quit.addActionListener(new WindowCloseButton());
-            options.add(save);
-            options.add(load);
-            options.add(quit);
-            gameView.frame.add(options, BorderLayout.NORTH);
-            boolean sunPieceCaptured = false;
+        boolean sunPieceCaptured = false;
         
         while (!gameView.gameBoard.isSunPieceCaptured()) {
             try {
@@ -89,6 +76,7 @@ public class gameviewer {
                 gameView.refreshBoard(gameView.updatedGameboard, turn); //still doesnt display correctly
                 gameView.setMoveMade(false);  // Reset the flag after updating the game board
                 gameView.setFirstClick(true);
+                gameView.latch = new CountDownLatch(1);
             }
             
             sunPieceCaptured = gameView.gameBoard.isSunPieceCaptured(); // check if any sunpiece is captured
@@ -114,6 +102,20 @@ public class gameviewer {
         SwingUtilities.invokeLater(() -> {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             ImageIcon appIcon = new ImageIcon("view/yellowSun.png");
+            
+        //Options pane creation, unchanging throughout the game
+        JPanel options = new JPanel(); // panel for the game options
+        options.setBackground(Color.LIGHT_GRAY);
+        options.setPreferredSize(new Dimension(frame.getWidth(), 30));
+        JButton save = new JButton("Save Game");
+        JButton load = new JButton("Load Previous Game");
+        JButton quit = new JButton("Quit Game");
+
+        quit.addActionListener(new WindowCloseButton());
+        options.add(save);
+        options.add(load);
+        options.add(quit);
+        frame.add(options, BorderLayout.NORTH);
     
             // Create a new panel with the chess board
             JPanel boardPanel = createBoardPanel(piecePositions, boardColor1, boardColor2);
@@ -127,20 +129,17 @@ public class gameviewer {
                     panelcount++;
                     if (panelcount == 2) {
                         contentPane.remove(component);
+                        panelcount--;
                     }
-                    break; 
                 }
             }
 
             frame.setIconImage(appIcon.getImage());
             // Add the new boardPanel to the frame's content pane
-            boardPanel.revalidate();;
-            boardPanel.repaint();
-            frame.add(boardPanel);
+            frame.add(boardPanel, BorderLayout.CENTER);
             frame.pack();
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.setVisible(true);
-            
         });
     }
 
@@ -221,6 +220,8 @@ public class gameviewer {
             } else {
                 button.setBackground(boardColor2);
             }
+        boardPanel.revalidate();
+        boardPanel.repaint();
         }
         return boardPanel;
     }
@@ -284,29 +285,29 @@ public class gameviewer {
         }
 
         private void handleSecondClick(JButton sourceButton) {
-            sourceButton.setBackground(Color.BLUE);
-
-
             int destinationPosition = getButtonPosition(sourceButton);
             System.out.println(gameView.saveFirstSelect);
             ArrayList<Integer> allValidMoves = gameView.getAllValidMoves();
             System.out.println("preparing make move");
+            GameBoard previousGameBoard = gameView.gameBoard; // Save current state
             for (int i = 0; i < allValidMoves.size(); i++) {
                 if (destinationPosition == allValidMoves.get(i)) {
+                    sourceButton.setBackground(Color.BLUE);
                     gameView.updatedGameboard = gamecontroller.makeMoveBoardLogic(gameView.saveFirstSelect.get(0), destinationPosition, gameView.gameBoard);
                     System.out.println("move made");
                     System.out.println(gameView.updatedGameboard); 
                     gameView.setMoveMade(true); 
                     gameView.latch.countDown();
+                    gameView.saveFirstSelect.remove(0);
+                    selectedPiece = null;
+                    selectedPosition = -1;
+                    break;
                 }
             }
-            gameView.saveFirstSelect.remove(0);
-            //System.out.println("Destination Position: " + destinationPosition);
-
-            selectedPiece = null;
-            selectedPosition = -1;
-            //gameView.setFirstClick(true);
-            //System.out.println("FinalFirstClick (2nd) : " + gameView.isFirstClick);
+            if (!gameView.moveMade) {
+                gameView.gameBoard = previousGameBoard;
+                JOptionPane.showMessageDialog(null, "Invalid Move", "Move error" , JOptionPane.ERROR_MESSAGE);
+            }   
         }
         
         private int getButtonPosition(JButton button) {
