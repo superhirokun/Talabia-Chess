@@ -24,10 +24,20 @@ public class ZaTester{
             Integer pieceToMove = sc.nextInt();
             System.out.println("Enter a destination: ");
             Integer destination = sc.nextInt();
-            //isValidMove(destination, piece, gameBoard);
             if(turnBruh ==1){
                 ChessPiece piece = pieces.get(pieceToMove);
-                newBoard = gamecontroller.makeMoveBoardLogic(piece, destination, gameBoard);
+                ArrayList<Integer> validMoves=gamecontroller.isValidMove(piece, piece.getPosition(), gameBoard);
+                System.out.println("works");
+                for (Integer validMove : validMoves) {
+                    if(validMove == destination){
+                        System.out.println("Valid move");
+                        newBoard = gamecontroller.makeMoveBoardLogic(piece, destination, gameBoard);
+                        break;
+                    }else{
+                        System.out.println("Invalid move");
+                        break;
+                    }
+                }
                 System.out.println(gameBoard.plusPiece);
                 newBoard.plusPiece = gameBoard.plusPiece;
                 newBoard.timePiece = gameBoard.timePiece;
@@ -37,7 +47,19 @@ public class ZaTester{
                 HashMap <Integer, ChessPiece> newPieces = newBoard.piecePosition;
                 ChessPiece piece = newPieces.get(pieceToMove);
                 System.out.println(newBoard.plusPiece);
-                newBoard = gamecontroller.makeMoveBoardLogic(piece, destination, newBoard);
+                System.out.println(newBoard.getAllPiecePosition());
+                ArrayList<Integer> validMoves=gamecontroller.isValidMove(piece, piece.getPosition(), newBoard);
+                System.out.println("works");
+                for (Integer validMove : validMoves) {
+                    if(validMove == destination){
+                        System.out.println("Valid move");
+                        newBoard = gamecontroller.makeMoveBoardLogic(piece, destination, newBoard);
+                        break;
+                    }else{
+                        System.out.println("Invalid move");
+                        break;
+                    }
+                }
                
                 newBoard.plusPiece = newBoard.setPlusPiece(newBuilder.bobsBoard);
                 newBoard.timePiece = newBoard.setTimePiece(newBuilder.bobsBoard);

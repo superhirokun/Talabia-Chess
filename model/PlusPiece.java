@@ -39,7 +39,7 @@ public class PlusPiece extends ChessPiece{
                         validMoves.add(destination);
                     } else if (gameBoard.getPiece(destination).getColor() != this.color) {
                         validMoves.add(destination);
-                        BoardLogic.setTargetPiece(gameBoard.getPiece(destination), destination);
+                        //BoardLogic.setTargetPiece(gameBoard.getPiece(destination), destination);
                         break;
                     }else if (gameBoard.getPiece(destination).getColor() == this.color) {
                         break;
