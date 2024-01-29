@@ -22,6 +22,8 @@ public class gameviewer {
     public GameBoard updatedGameboard;
     public int turnBruh;
     boolean isFirstClick = true;
+    ImageIcon previousImageIcon;
+    int previousLocation = 0;
     
     public gameviewer() {
         this.saveFirstSelect = new ArrayList<>();
@@ -87,6 +89,7 @@ public class gameviewer {
         
         SwingUtilities.invokeLater(() -> {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            ImageIcon appIcon = new ImageIcon("view/yellowSun.png");
     
             JPanel options = new JPanel(); // panel for the game options
             options.setBackground(Color.LIGHT_GRAY);
@@ -113,7 +116,8 @@ public class gameviewer {
                     break; 
                 }
             }
-    
+
+            frame.setIconImage(appIcon.getImage());
             // Add the new boardPanel to the frame's content pane
             frame.add(boardPanel);
             frame.pack();
@@ -189,7 +193,7 @@ public class gameviewer {
                 }
                 boardPanel.add(button);
             } else {
-                button = new JButton();
+                button = new JButton("");
                 button.addActionListener(new ButtonClickListener(this));
                 button.setActionCommand(String.valueOf(i));
                 boardPanel.add(button);
@@ -200,9 +204,10 @@ public class gameviewer {
                 button.setBackground(boardColor2);
             }
         }
-    
         return boardPanel;
     }
+
+    //clicks handling
 
     public boolean isFirstClick() {
         return isFirstClick;
@@ -243,11 +248,11 @@ public class gameviewer {
             System.out.println("Selected ChessPiece: " + selectedPiece);
             
             if (selectedPiece != null) {
-                gameView.setAllValidMoves(gamecontroller.isValidMove(selectedPiece, selectedPosition, gameView.gameBoard));
+                                gameView.setAllValidMoves(gamecontroller.isValidMove(selectedPiece, selectedPosition, gameView.gameBoard));
                 System.out.println(allValidMoves);
                 sourceButton.setBackground(Color.GREEN);
                 gameView.setFirstClick(false);
-            }
+                            }
         }
 
         private void handleSecondClick(JButton sourceButton) {
@@ -274,7 +279,7 @@ public class gameviewer {
             gameView.setFirstClick(true);
             //System.out.println("FinalFirstClick (2nd) : " + gameView.isFirstClick);
         }
-
+        
         private int getButtonPosition(JButton button) {
             return Integer.parseInt(button.getActionCommand());
         }
