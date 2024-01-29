@@ -6,7 +6,7 @@ import model.*;
 import model.GameBoard.BobTheBuilder;
 
 public class gamecontroller extends BoardLogic{
-    
+    static BobTheBuilder building = new BobTheBuilder();
     /*make a move by generating a new board */
     public static GameBoard makeMoveBoardLogic(ChessPiece piece, int destination, GameBoard gamer){   //make the move
         BobTheBuilder builder = new BobTheBuilder();
@@ -34,7 +34,16 @@ public class gamecontroller extends BoardLogic{
                 builder.placePiece(gamer,null, i);    //if the piece is null then place a null piece
             }
         }
+        setBob(builder);
         return builder.build();
+    }
+
+    public static void setBob(BobTheBuilder builderer){
+        building = builderer;
+    }
+
+    public static BobTheBuilder getBob(){
+        return building;
     }
 
     /*decode the fen string into  */

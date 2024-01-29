@@ -23,7 +23,7 @@ public class gamecontrollerTest {
         builder.placePiece(gameBoard, piece, 2);
         
         // Make the move
-        int destination = 13;
+        int destination = 9;
         GameBoard newGameBoard = gamecontroller.makeMoveBoardLogic(piece, destination, gameBoard);
         
         // Assert that the piece has moved to the destination

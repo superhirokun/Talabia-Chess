@@ -88,7 +88,7 @@ public class GameBoard {
         return builder.build();
     }
 
-    private void boardCreator(BobTheBuilder builder){
+    public void boardCreator(BobTheBuilder builder){
         for(int i = 0; i < BoardLogic.totalSquare; i++){
             this.board[i] = builder.bobsBoard[i];
         }
