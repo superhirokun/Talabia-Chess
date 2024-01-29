@@ -51,7 +51,8 @@ public class gameviewer {
         this.moveMade = moveMade;
     }
     JFrame frame = new JFrame("Tilapia Chess");
-    JPanel boardPanel;
+    JPanel boardPanel = new JPanel();
+    JPanel options;
 
     public static void main(String[] args) {
         gameviewer gameView = new gameviewer();
@@ -60,21 +61,7 @@ public class gameviewer {
         gameView.displayGame(gameView.gameBoard, gameView.turnBruh);
         gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh);
         gamecontroller.loadGame();
-
-        //Options pane creation, unchanging throughout the game
-        JPanel options = new JPanel(); // panel for the game options
-            options.setBackground(Color.LIGHT_GRAY);
-            options.setPreferredSize(new Dimension(gameView.frame.getWidth(), 30));
-            JButton save = new JButton("Save Game");
-            JButton load = new JButton("Load Previous Game");
-            JButton quit = new JButton("Quit Game");
-    
-            quit.addActionListener(new WindowCloseButton());
-            options.add(save);
-            options.add(load);
-            options.add(quit);
-            gameView.frame.add(options, BorderLayout.NORTH);
-            boolean sunPieceCaptured = false;
+        boolean sunPieceCaptured = false;
         
         while (!gameView.gameBoard.isSunPieceCaptured()) {
             try {
@@ -88,6 +75,7 @@ public class gameviewer {
                 }
                 int turn = BoardLogic.turnCounter(gameView.turnBruh); // increments counter
                 System.out.println("turn counter : " + turn);
+                gameView.turnBruh++;
                 BoardLogic.zaSwitcher(); // check if the next turn requires switching between plus and time piece
                 gameView.refreshBoard(gameView.updatedGameboard, turn); //still doesnt display correctly
                 gameView.setMoveMade(false);  // Reset the flag after updating the game board
@@ -120,7 +108,7 @@ public class gameviewer {
             ImageIcon appIcon = new ImageIcon("view/yellowSun.png");
             
         //Options pane creation, unchanging throughout the game
-        JPanel options = new JPanel(); // panel for the game options
+        options = new JPanel(); // panel for the game options
         options.setBackground(Color.LIGHT_GRAY);
         options.setPreferredSize(new Dimension(frame.getWidth(), 30));
         JButton save = new JButton("Save Game");
@@ -132,23 +120,10 @@ public class gameviewer {
         options.add(load);
         options.add(quit);
         frame.add(options, BorderLayout.NORTH);
-    
+        frame.add(boardPanel);
+            frame.remove(boardPanel);
             // Create a new panel with the chess board
             JPanel boardPanel = createBoardPanel(piecePositions, boardColor1, boardColor2);
-            
-            // Remove the existing boardPanel from the frame's content pane
-            int panelcount = 0;
-            Container contentPane = frame.getContentPane();
-            Component[] components = contentPane.getComponents();
-            for (Component component : components) {
-                if (component instanceof JPanel) {
-                    panelcount++;
-                    if (panelcount == 2) {
-                        contentPane.remove(component);
-                        panelcount--;
-                    }
-                }
-            }
 
             frame.setIconImage(appIcon.getImage());
             // Add the new boardPanel to the frame's content pane
@@ -236,14 +211,13 @@ public class gameviewer {
             } else {
                 button.setBackground(blue);
             }
-        boardPanel.revalidate();
-        boardPanel.repaint();
         }
         return boardPanel;
     }
 
     private JPanel refreshBoard(GameBoard gameBoard, int turnCheck){
         boardPanel.removeAll();
+        options.removeAll();
         displayGame(gameBoard, turnCheck);
         return boardPanel;
     }
