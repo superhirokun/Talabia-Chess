@@ -365,7 +365,7 @@ public class gameviewer {
             String loadName = JOptionPane.showInputDialog(null, "Enter save file to be loaded here(exclude.txt): ");
             loadName += ".txt";
             String decodedFEN = gamecontroller.loadGame(loadName);
-            
+            //code to generate the new board
         }
         }
     }

@@ -62,7 +62,7 @@ public class BoardLogic {
     }
 
     /*Capture the piece
-     * TODO: need testing
+     
     */
     public static void capturedZAPiece(BobTheBuilder builder, int destination){ 
         builder.piecePosition.get(destination).setCaptured(true);
