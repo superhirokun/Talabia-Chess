@@ -22,6 +22,8 @@ public class gameviewer {
     public GameBoard updatedGameboard;
     public int turnBruh;
     boolean isFirstClick = true;
+    ImageIcon previousImageIcon;
+    int previousLocation = 0;
     
     public gameviewer() {
         this.saveFirstSelect = new ArrayList<>();
@@ -46,30 +48,46 @@ public class gameviewer {
         this.moveMade = moveMade;
     }
     JFrame frame = new JFrame("Tilapia Chess");
+    JPanel boardPanel;
 
     public static void main(String[] args) {
         gameviewer gameView = new gameviewer();
         
         gameView.gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
         gameView.displayGame(gameView.gameBoard, gameView.turnBruh);
-        boolean sunPieceCaptured = false;
-        while (!gameView.gameBoard.isSunPieceCaptured()) {
 
+        //Options pane creation, unchanging throughout the game
+        JPanel options = new JPanel(); // panel for the game options
+            options.setBackground(Color.LIGHT_GRAY);
+            options.setPreferredSize(new Dimension(gameView.frame.getWidth(), 30));
+            JButton save = new JButton("Save Game");
+            JButton load = new JButton("Load Previous Game");
+            JButton quit = new JButton("Quit Game");
+    
+            quit.addActionListener(new WindowCloseButton());
+            options.add(save);
+            options.add(load);
+            options.add(quit);
+            gameView.frame.add(options, BorderLayout.NORTH);
+            boolean sunPieceCaptured = false;
+        
+        while (!gameView.gameBoard.isSunPieceCaptured()) {
             if (gameView.isMoveMade() == true && !gameView.isFirstClick() && gameView.saveFirstSelect.isEmpty()) {
                 int turn = BoardLogic.turnCounter(gameView.turnBruh); // increments counter
                 System.out.println("turn counter : " + turn);
                 BoardLogic.zaSwitcher(); // check if the next turn requires switching between plus and time piece
-                gameView.displayGame(gameView.updatedGameboard, gameView.turnBruh); //still doesnt display correctly
+                gameView.refreshBoard(gameView.updatedGameboard, turn); //still doesnt display correctly
                 gameView.setMoveMade(false);  // Reset the flag after updating the game board
+                gameView.setFirstClick(true);
             }
             
             sunPieceCaptured = gameView.gameBoard.isSunPieceCaptured(); // check if any sunpiece is captured
             
 
-            if (sunPieceCaptured == true) {
-                JOptionPane.showMessageDialog(null, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-                break;
-            }  
+             if (sunPieceCaptured == true) {
+                 JOptionPane.showMessageDialog(null, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                 break;
+             }  
             
             
         }
@@ -87,44 +105,40 @@ public class gameviewer {
         
         SwingUtilities.invokeLater(() -> {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
-            JPanel options = new JPanel(); // panel for the game options
-            options.setBackground(Color.LIGHT_GRAY);
-            options.setPreferredSize(new Dimension(frame.getWidth(), 30));
-            JButton save = new JButton("Save Game");
-            JButton load = new JButton("Load Previous Game");
-            JButton quit = new JButton("Quit Game");
-    
-            quit.addActionListener(new WindowCloseButton());
-            options.add(save);
-            options.add(load);
-            options.add(quit);
-            frame.add(options, BorderLayout.NORTH);
+            ImageIcon appIcon = new ImageIcon("view/yellowSun.png");
     
             // Create a new panel with the chess board
             JPanel boardPanel = createBoardPanel(piecePositions, boardColor1, boardColor2);
             
             // Remove the existing boardPanel from the frame's content pane
+            int panelcount = 0;
             Container contentPane = frame.getContentPane();
             Component[] components = contentPane.getComponents();
             for (Component component : components) {
                 if (component instanceof JPanel) {
-                    contentPane.remove(component);
+                    panelcount++;
+                    if (panelcount == 2) {
+                        contentPane.remove(component);
+                    }
                     break; 
                 }
             }
-    
+
+            frame.setIconImage(appIcon.getImage());
             // Add the new boardPanel to the frame's content pane
+            boardPanel.revalidate();;
+            boardPanel.repaint();
             frame.add(boardPanel);
             frame.pack();
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.setVisible(true);
+            
         });
     }
 
     private JPanel createBoardPanel(HashMap<Integer, ChessPiece> piecePositions, Color boardColor1, Color boardColor2) {
         // Create a new panel with the chess board
-        JPanel boardPanel = new JPanel();
+        boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(6, 7));
     
         // yellow pieces
@@ -189,7 +203,7 @@ public class gameviewer {
                 }
                 boardPanel.add(button);
             } else {
-                button = new JButton();
+                button = new JButton("");
                 button.addActionListener(new ButtonClickListener(this));
                 button.setActionCommand(String.valueOf(i));
                 boardPanel.add(button);
@@ -200,9 +214,16 @@ public class gameviewer {
                 button.setBackground(boardColor2);
             }
         }
-    
         return boardPanel;
     }
+
+    private JPanel refreshBoard(GameBoard gameBoard, int turnCheck){
+        boardPanel.removeAll();
+        displayGame(gameBoard, turnCheck);
+        return boardPanel;
+    }
+
+    //clicks handling
 
     public boolean isFirstClick() {
         return isFirstClick;
@@ -247,11 +268,15 @@ public class gameviewer {
                 System.out.println(allValidMoves);
                 sourceButton.setBackground(Color.GREEN);
                 gameView.setFirstClick(false);
+                }
+            else{
+                gameView.setFirstClick(true);
             }
         }
 
         private void handleSecondClick(JButton sourceButton) {
             sourceButton.setBackground(Color.BLUE);
+
 
             int destinationPosition = getButtonPosition(sourceButton);
             System.out.println(gameView.saveFirstSelect);
@@ -271,10 +296,10 @@ public class gameviewer {
 
             selectedPiece = null;
             selectedPosition = -1;
-            gameView.setFirstClick(true);
+            //gameView.setFirstClick(true);
             //System.out.println("FinalFirstClick (2nd) : " + gameView.isFirstClick);
         }
-
+        
         private int getButtonPosition(JButton button) {
             return Integer.parseInt(button.getActionCommand());
         }

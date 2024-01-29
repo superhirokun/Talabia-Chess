@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "gameviewer",
+            "request": "launch",
+            "mainClass": "view.gameviewer",
+            "projectName": "Talabia-Chess_8b3c22ba"
+        },
+        {
+            "type": "java",
             "name": "ZaTester",
             "request": "launch",
             "mainClass": "model.ZaTester",
