@@ -61,22 +61,6 @@ public class gameviewer {
         gameView.displayGame(gameView.gameBoard, gameView.turnBruh);
         //gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh);
         //gamecontroller.loadGame();
-
-        //Options pane creation, unchanging throughout the game
-        JPanel options = new JPanel(); // panel for the game options
-            options.setBackground(Color.LIGHT_GRAY);
-            options.setPreferredSize(new Dimension(gameView.frame.getWidth(), 30));
-            JButton save = new JButton("Save Game");
-            JButton load = new JButton("Load Previous Game");
-            JButton quit = new JButton("Quit Game");
-
-            save.addActionListener(new SaveButton(gameView));
-            load.addActionListener(new LoadButton());
-            quit.addActionListener(new WindowCloseButton());
-            options.add(save);
-            options.add(load);
-            options.add(quit);
-            gameView.frame.add(options, BorderLayout.NORTH);
             boolean sunPieceCaptured = false;
         
         while (!gameView.gameBoard.isSunPieceCaptured()) {
@@ -134,6 +118,8 @@ public class gameviewer {
         JButton quit = new JButton("Quit Game");
 
         quit.addActionListener(new WindowCloseButton());
+        //save.addActionListener(new SaveButton(gameView));
+        load.addActionListener(new LoadButton());
         options.add(save);
         options.add(load);
         options.add(quit);
