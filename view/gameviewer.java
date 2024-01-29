@@ -52,9 +52,11 @@ public class gameviewer {
 
     public static void main(String[] args) {
         gameviewer gameView = new gameviewer();
-        
         gameView.gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
+        
         gameView.displayGame(gameView.gameBoard, gameView.turnBruh);
+        gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh);
+        gamecontroller.loadGame();
 
         //Options pane creation, unchanging throughout the game
         JPanel options = new JPanel(); // panel for the game options
@@ -136,7 +138,7 @@ public class gameviewer {
         });
     }
 
-    private JPanel createBoardPanel(HashMap<Integer, ChessPiece> piecePositions, Color boardColor1, Color boardColor2) {
+    private JPanel createBoardPanel(HashMap<Integer, ChessPiece> piecePositions, Color yellow, Color blue) {
         // Create a new panel with the chess board
         boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(6, 7));
@@ -209,9 +211,9 @@ public class gameviewer {
                 boardPanel.add(button);
             }
             if (i % 2 == 0) {
-                button.setBackground(boardColor1);
+                button.setBackground(yellow);
             } else {
-                button.setBackground(boardColor2);
+                button.setBackground(blue);
             }
         }
         return boardPanel;

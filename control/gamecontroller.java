@@ -1,4 +1,9 @@
 package control;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 //push the code again homie, ur previous code didnt save the previous color so i edited it abit
@@ -214,11 +219,46 @@ public class gamecontroller extends BoardLogic{
     }
     return failed;
 }
-    public static void saveGame() {
-           
+    public static void saveGame(GameBoard gameBoard, Integer turn) {
+        // Get the FEN string
+        String fenString = zaEncoder(gameBoard.getPiecePosition(), turn);
+
+        // Set filename to saveFile.txt
+        String filePath = "saveFile.txt";
+
+        // Write the FEN string to the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(fenString);
+            System.out.println("Game saved to " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error saving the game.");
+        }
     }
 
     public static void loadGame() {
+        // Specify the file path
+        String filePath = "saveFile.txt";
+
+        // Read the FEN string from the file
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String fenString = reader.readLine();
+
+            if (fenString != null) {
+                // Decode the FEN string
+                System.out.println(fenString);
+                String[] decodedFEN = zaFENDecoder(fenString);
+                
+                
+                System.out.println("Game loaded from " + filePath);
+            } else {
+                System.out.println("The file is empty.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading the game.");
+        }
+
         
     }
     
