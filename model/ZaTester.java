@@ -12,6 +12,8 @@ public class ZaTester{
         BobTheBuilder builder = new BobTheBuilder();
         HashMap <Integer, ChessPiece> pieces = gameBoard.piecePosition;
         gameBoard.zaStarter(builder);
+        GameBoard newBoard= new GameBoard(new GameBoard.BobTheBuilder());
+        BobTheBuilder newBuilder = new BobTheBuilder();
         
         //System.out.println(Arrays.toString(gamecontroller.zaFENDecoder(GameBoard.StartingFEN)));
         int count = 0;
@@ -22,11 +24,23 @@ public class ZaTester{
             Integer pieceToMove = sc.nextInt();
             System.out.println("Enter a destination: ");
             Integer destination = sc.nextInt();
-            ChessPiece piece = pieces.get(pieceToMove);
             //isValidMove(destination, piece, gameBoard);
-            GameBoard newBoard = gamecontroller.makeMoveBoardLogic(piece, destination, gameBoard);
+            if(turnBruh ==1){
+                ChessPiece piece = pieces.get(pieceToMove);
+                newBoard = gamecontroller.makeMoveBoardLogic(piece, destination, gameBoard);
+                System.out.println(newBoard.plusPiece);
+                newBoard.plusPiece = gameBoard.plusPiece;
+                newBoard.timePiece = gameBoard.timePiece;
+                System.out.println(newBoard.plusPiece);
+            }else{
+                HashMap <Integer, ChessPiece> newPieces = newBoard.piecePosition;
+                ChessPiece piece = newPieces.get(pieceToMove);
+                System.out.println(newBoard.plusPiece);
+                newBoard = gamecontroller.makeMoveBoardLogic(piece, destination, newBoard);
+                System.out.println(newBoard.plusPiece);
+            }
             //BoardLogic.capturedZAPiece(builder, destination);
-            BobTheBuilder newBuilder = gamecontroller.getBob();
+            newBuilder = gamecontroller.getBob();
             System.out.println(gameBoard.getAllPiecePosition());
             System.out.println(newBuilder.piecePosition);
             System.out.println(newBoard.getAllPiecePosition());

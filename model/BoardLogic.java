@@ -56,6 +56,8 @@ public class BoardLogic {
     public static void zaSwitcher(){
         if(turn%2 == 0){
             setCanSwitch(true);
+        }else{
+            setCanSwitch(false);
         }
     }
 

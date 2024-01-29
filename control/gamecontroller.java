@@ -21,13 +21,26 @@ public class gamecontroller extends BoardLogic{
                }else if(prevPiecePosition.get(i).getPosition() == destination && prevPiecePosition.get(i).getCaptured() == true){   //check if the piece is captured
                    continue;
                }else if(canSwitch == true){     //switch the time piece with the plus piece when the turn is even
-                    if(prevPiecePosition.get(i) == gamer.plusPiece.get(i)){
-                        builder.placePiece(gamer,TimePiece.createTimePiece(gamer.timePiece.get(i).getColor(), i), i);
-                    }else if(prevPiecePosition.get(i) == gamer.timePiece.get(i)){
-                        builder.placePiece(gamer,PlusPiece.createPlusPiece(gamer.plusPiece.get(i).getColor(), i), i);
-                    }else{
-                        builder.placePiece(gamer,prevPiecePosition.get(i), i);
+                    if(gamer.plusPiece.get(i)== null){
+                        if(gamer.timePiece.get(i)==null){
+                            builder.placePiece(gamer,prevPiecePosition.get(i), i);
+                        }
+                        else if(prevPiecePosition.get(i).getPosition() == gamer.timePiece.get(i).getPosition()){
+                            builder.placePiece(gamer,PlusPiece.createPlusPiece(gamer.timePiece.get(i).getColor(), i), i);
+                            gamer.plusPiece.put(i, PlusPiece.createPlusPiece(gamer.timePiece.get(i).getColor(), i));
+                            
+                        }
+                    }else if(gamer.timePiece.get(i) == null){
+                        if(gamer.plusPiece.get(i)==null){
+                            builder.placePiece(gamer,prevPiecePosition.get(i), i);
+                        }
+                        else if(prevPiecePosition.get(i).getPosition() == gamer.plusPiece.get(i).getPosition()){
+                            builder.placePiece(gamer,TimePiece.createTimePiece(gamer.plusPiece.get(i).getColor(), i), i);
+                            gamer.timePiece.put(i, TimePiece.createTimePiece(gamer.plusPiece.get(i).getColor(), i));
+                        }
+                        
                     }
+
                }
                else{
                    builder.placePiece(gamer,prevPiecePosition.get(i), i);   //if the piece is not the piece that is moving then place the piece at the same position
