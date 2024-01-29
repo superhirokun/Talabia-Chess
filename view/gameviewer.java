@@ -59,8 +59,6 @@ public class gameviewer {
         gameView.gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
         
         gameView.displayGame(gameView.gameBoard, gameView.turnBruh);
-        //gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh);
-        //gamecontroller.loadGame();
             boolean sunPieceCaptured = false;
         
         while (!gameView.gameBoard.isSunPieceCaptured()) {
@@ -118,7 +116,7 @@ public class gameviewer {
         JButton quit = new JButton("Quit Game");
 
         quit.addActionListener(new WindowCloseButton());
-        //save.addActionListener(new SaveButton(gameView));
+        save.addActionListener(new SaveButton(this));
         load.addActionListener(new LoadButton());
         options.add(save);
         options.add(load);
