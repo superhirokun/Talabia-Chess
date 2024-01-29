@@ -13,6 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.CountDownLatch;
 
 public class gameviewer {
     private GameBoard gameBoard;
@@ -24,6 +25,7 @@ public class gameviewer {
     boolean isFirstClick = true;
     ImageIcon previousImageIcon;
     int previousLocation = 0;
+    CountDownLatch latch = new CountDownLatch(1);
     
     public gameviewer() {
         this.saveFirstSelect = new ArrayList<>();
@@ -52,9 +54,11 @@ public class gameviewer {
 
     public static void main(String[] args) {
         gameviewer gameView = new gameviewer();
-        
         gameView.gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
+        
         gameView.displayGame(gameView.gameBoard, gameView.turnBruh);
+        gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh);
+        gamecontroller.loadGame();
 
         //Options pane creation, unchanging throughout the game
         JPanel options = new JPanel(); // panel for the game options
@@ -72,7 +76,15 @@ public class gameviewer {
             boolean sunPieceCaptured = false;
         
         while (!gameView.gameBoard.isSunPieceCaptured()) {
+            try {
+                // Wait until the countdown latch reaches 0
+                gameView.latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             if (gameView.isMoveMade() == true && !gameView.isFirstClick() && gameView.saveFirstSelect.isEmpty()) {
+                if (!gameView.isMoveMade() || gameView.isFirstClick() || !gameView.saveFirstSelect.isEmpty()) {   
+                }
                 int turn = BoardLogic.turnCounter(gameView.turnBruh); // increments counter
                 System.out.println("turn counter : " + turn);
                 BoardLogic.zaSwitcher(); // check if the next turn requires switching between plus and time piece
@@ -87,9 +99,7 @@ public class gameviewer {
              if (sunPieceCaptured == true) {
                  JOptionPane.showMessageDialog(null, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                  break;
-             }  
-            
-            
+             }      
         }
     }
 
@@ -136,7 +146,7 @@ public class gameviewer {
         });
     }
 
-    private JPanel createBoardPanel(HashMap<Integer, ChessPiece> piecePositions, Color boardColor1, Color boardColor2) {
+    private JPanel createBoardPanel(HashMap<Integer, ChessPiece> piecePositions, Color yellow, Color blue) {
         // Create a new panel with the chess board
         boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(6, 7));
@@ -209,9 +219,9 @@ public class gameviewer {
                 boardPanel.add(button);
             }
             if (i % 2 == 0) {
-                button.setBackground(boardColor1);
+                button.setBackground(yellow);
             } else {
-                button.setBackground(boardColor2);
+                button.setBackground(blue);
             }
         }
         return boardPanel;
@@ -238,6 +248,7 @@ public class gameviewer {
         private ChessPiece selectedPiece;
         private int selectedPosition;
         private Color previousColor;
+        private CountDownLatch latch = new CountDownLatch(1);
 
         public ButtonClickListener(gameviewer gameView) {
             this.gameView = gameView;
@@ -249,7 +260,7 @@ public class gameviewer {
             if (gameView.isFirstClick()) {
                 handleFirstClick(sourceButton);
             } else {
-                handleSecondClick(sourceButton);
+                handleSecondClick(sourceButton); 
             }
         }
 
@@ -288,7 +299,7 @@ public class gameviewer {
                     System.out.println("move made");
                     System.out.println(gameView.updatedGameboard); 
                     gameView.setMoveMade(true); 
-                    
+                    gameView.latch.countDown();
                 }
             }
             gameView.saveFirstSelect.remove(0);

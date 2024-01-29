@@ -38,6 +38,7 @@ public class GameBoard {
         displayBoard();   
     }
     
+    
 
 
     //Method
@@ -239,7 +240,8 @@ public class GameBoard {
     }
 
     public boolean isSunPieceCaptured() {
-        for (ChessPiece piece : piecePosition.values()) {
+        Collection<ChessPiece> pieces = new ArrayList<>(piecePosition.values());
+        for (ChessPiece piece : pieces) {
             if (piece != null && piece.getPieceType() == ChessPiece.PieceType.SUN && piece.getCaptured()) {
                 return true; // Found a captured Sun piece
             }
