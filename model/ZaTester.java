@@ -23,8 +23,11 @@ public class ZaTester{
             System.out.println("Enter a destination: ");
             Integer destination = sc.nextInt();
             ChessPiece piece = pieces.get(pieceToMove);
+            //isValidMove(destination, piece, gameBoard);
             GameBoard newBoard = gamecontroller.makeMoveBoardLogic(piece, destination, gameBoard);
+            //BoardLogic.capturedZAPiece(builder, destination);
             BobTheBuilder newBuilder = gamecontroller.getBob();
+            System.out.println(gameBoard.getAllPiecePosition());
             System.out.println(newBuilder.piecePosition);
             System.out.println(newBoard.getAllPiecePosition());
             newBoard.boardCreator(newBuilder);
