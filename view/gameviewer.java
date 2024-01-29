@@ -52,7 +52,7 @@ public class gameviewer {
     }
     JFrame frame = new JFrame("Tilapia Chess");
     JPanel boardPanel = new JPanel();
-    JPanel options;
+    JPanel options = new JPanel();;
 
     public static void main(String[] args) {
         gameviewer gameView = new gameviewer();
@@ -124,6 +124,8 @@ public class gameviewer {
             ImageIcon appIcon = new ImageIcon("view/yellowSun.png");
             
         //Options pane creation, unchanging throughout the game
+        frame.add(options);
+        frame.remove(options);
         options = new JPanel(); // panel for the game options
         options.setBackground(Color.LIGHT_GRAY);
         options.setPreferredSize(new Dimension(frame.getWidth(), 30));
@@ -137,7 +139,7 @@ public class gameviewer {
         options.add(quit);
         frame.add(options, BorderLayout.NORTH);
         frame.add(boardPanel);
-            frame.remove(boardPanel);
+        frame.remove(boardPanel);
             // Create a new panel with the chess board
             JPanel boardPanel = createBoardPanel(piecePositions, yellow, blue);
 
