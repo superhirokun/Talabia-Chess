@@ -25,7 +25,8 @@ public class gamecontroller extends BoardLogic {
         for (int i = 0; i < BoardLogic.totalSquare; i++) {
             if (prevPiecePosition.get(i) != null) { // check if the piece is not null
                 if (prevPiecePosition.get(i).getPosition() == initialPosition) {
-                    prevPiecePosition.get(i).setPosition(destination); // set the position of the piece to the new position which is the destination
+                    prevPiecePosition.get(i).setPosition(destination); // set the position of the piece to the new
+                                                                       // position which is the destination
                     builder.placePiece(gamer, prevPiecePosition.get(i), destination);
                     builder.placePiece(gamer, null, i);
                 } else if (prevPiecePosition.get(i).getPosition() == destination
@@ -62,6 +63,7 @@ public class gamecontroller extends BoardLogic {
             } else {
                 builder.placePiece(gamer, null, i); // if the piece is null then place a null piece
             }
+            getWinner(prevPiecePosition);
         }
         setBob(builder);
         return builder.build();

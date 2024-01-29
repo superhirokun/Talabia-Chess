@@ -119,4 +119,15 @@ public class BoardLogic {
         BoardLogic.canSwitch = canSwitch;
     }
 
+    public static void getWinner(HashMap<Integer, ChessPiece> piecePostion) {
+        for (ChessPiece piece : piecePostion.values()) {
+            if (piece.getPieceType() == ChessPiece.PieceType.SUN && piece.getCaptured()) {
+                if (piece.getColor() == Color.Yellow) {
+                    System.out.println("Blue wins");
+                } else {
+                    System.out.println("Yellow wins");
+                }
+            }
+        }
+    }
 }
