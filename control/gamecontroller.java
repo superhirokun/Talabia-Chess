@@ -1,8 +1,9 @@
 package control;
 import java.util.*;
+
+//push the code again homie, ur previous code didnt save the previous color so i edited it abit
 import model.*;
 import model.GameBoard.BobTheBuilder;
-import model.Color; //push the code again homie, ur previous code didnt save the previous color so i edited it abit
 
 public class gamecontroller extends BoardLogic{
     
@@ -11,7 +12,7 @@ public class gamecontroller extends BoardLogic{
         BobTheBuilder builder = new BobTheBuilder();
         int initialPosition = piece.getPosition();
         HashMap<Integer, ChessPiece> prevPiecePosition = new HashMap<>();
-        prevPiecePosition = gamer.getAllThePiece();  //get the previous position of the piece
+        prevPiecePosition = gamer.getAllPiecePosition();  //get the previous position of the piece
         for(int i = 0; i < BoardLogic.totalSquare; i++){
            if(prevPiecePosition.get(i) != null){    //check if the piece is not null
                if(prevPiecePosition.get(i).getPosition() == initialPosition){

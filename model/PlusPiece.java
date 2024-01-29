@@ -6,7 +6,7 @@ public class PlusPiece extends ChessPiece{
     protected final static int[] offsetValues = {-7, -1, 1, 7};
     protected int destination;
 
-    PlusPiece( Color color, int position) {
+    public PlusPiece( Color color, int position) {
         super(PieceType.PLUS, color, position, false);
     }
 

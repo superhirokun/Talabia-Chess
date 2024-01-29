@@ -13,11 +13,13 @@ public class ZaTester{
         gameBoard.zaStarter(builder);
         
         //System.out.println(Arrays.toString(gamecontroller.zaFENDecoder(GameBoard.StartingFEN)));
+        int count = 0;
         
-        
-        while (!gameBoard.isSunPieceCaptured()) {
+        while (count<100) {
             //display board every move 
             for (ChessPiece piece : pieces.values()) {
+                System.out.print(piece);
+                count++;
                 /*
                 
                 if (selectedTile.get(ChessPiece) == piece) { ()
