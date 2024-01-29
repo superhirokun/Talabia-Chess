@@ -235,49 +235,48 @@ public class gamecontroller extends BoardLogic{
     }
     return failed;
 }
-    public static void saveGame(GameBoard gameBoard, Integer turn) {
-        // Get the FEN string
-        String fenString = zaEncoder(gameBoard.getPiecePosition(), turn);
+public static void saveGame(GameBoard gameBoard, Integer turn, String fileName) {
+    // Get the FEN string
+    String fenString = zaEncoder(gameBoard.getPiecePosition(), turn);
 
-        // Set filename to saveFile.txt
-        String filePath = "saveFile.txt";
+    // Set the filename to the specified value or use a default if null
+    String filePath = (fileName != null && !fileName.isEmpty()) ? fileName : "saveFile.txt";
 
-        // Write the FEN string to the file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(fenString);
-            System.out.println("Game saved to " + filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error saving the game.");
-        }
+    // Write the FEN string to the file
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        writer.write(fenString);
+        System.out.println("Game saved to " + filePath);
+    } catch (IOException e) {
+        e.printStackTrace();
+        System.err.println("Error saving the game.");
     }
+}
 
-    public static String loadGame() {
-        // Specify the file path
-        String filePath = "saveFile.txt";
-        String test = "-1";
-        // Read the FEN string from the file
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String fenString = reader.readLine();
+public static String loadGame(String fileName) {
+    // Specify the file path
+    String filePath = (fileName != null && !fileName.isEmpty()) ? fileName : "saveFile.txt";
+    String test = "-1";
 
-            if (fenString != null) {
-                // Decode the FEN string
-                System.out.println(fenString);
-                String[] decodedFEN = zaFENDecoder(fenString);
-                test = decodedFEN.toString();
-                return test;
-            } else {
-                System.out.println("The file is empty.");
-                return test;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error loading the game.");
+    // Read the FEN string from the file
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        String fenString = reader.readLine();
+
+        if (fenString != null) {
+            // Decode the FEN string
+            System.out.println(fenString);
+            String[] decodedFEN = zaFENDecoder(fenString);
+            test = Arrays.toString(decodedFEN);
+            return test;
+        } else {
+            System.out.println("The file is empty.");
             return test;
         }
-
-        
+    } catch (IOException e) {
+        e.printStackTrace();
+        System.err.println("Error loading the game.");
+        return test;
     }
+}
     
 }    
 
