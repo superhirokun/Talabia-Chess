@@ -342,7 +342,9 @@ public class gameviewer {
             "Save Ongoing Game?",
             "saveGame" , JOptionPane.YES_NO_OPTION);
         if (confirmation == JOptionPane.YES_OPTION) {
-            gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh);
+            String saveName = JOptionPane.showInputDialog(null, "Enter save file name here: ");
+            saveName += ".txt";
+            gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh,saveName);
             System.exit(0);
         }
         }
@@ -360,7 +362,9 @@ public class gameviewer {
             "Load Previous Game?",
             "loadGame" , JOptionPane.YES_NO_OPTION);
         if (confirmation == JOptionPane.YES_OPTION) {
-            String decodedFEN = gamecontroller.loadGame();
+            String loadName = JOptionPane.showInputDialog(null, "Enter save file to be loaded here(exclude.txt): ");
+            loadName += ".txt";
+            String decodedFEN = gamecontroller.loadGame(loadName);
             
         }
         }
