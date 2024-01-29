@@ -2,36 +2,32 @@ package model;
 
 import java.util.ArrayList;
 
-public class PlusPiece extends ChessPiece{
-    protected final static int[] offsetValues = {-7, -1, 1, 7};
+public class PlusPiece extends ChessPiece {
+    protected final static int[] offsetValues = { -7, -1, 1, 7 };
     protected int destination;
 
-    public PlusPiece( Color color, int position) {
+    public PlusPiece(Color color, int position) {
         super(PieceType.PLUS, color, position, false);
     }
 
     public static PlusPiece createPlusPiece(Color color, int position) {
         return new PlusPiece(color, position);
     }
-    /**
-     * Calculates the valid moves for the PlusPiece on the given game board.
-     * 
-     * @param gameBoard the game board on which the PlusPiece is placed
-     * @return an ArrayList of integers representing the valid move positions
-     */
-    public ArrayList<Integer> ValidMoves(GameBoard gameBoard){
+
+    // determines valid moves for plus piece
+    public ArrayList<Integer> ValidMoves(GameBoard gameBoard) {
         ArrayList<Integer> validMoves = new ArrayList<Integer>();
         for (int offset : offsetValues) {
             destination = this.position;
-            while(BoardLogic.isValidSquareCoordinate(destination)){
+            while (BoardLogic.isValidSquareCoordinate(destination)) {
                 destination = destination + offset;
-                if (FirstColumnOffsetKiller(this.position, offset) || 
-                SeventhColumnOffsetKiller(this.position, offset)) {
+                if (FirstColumnOffsetKiller(this.position, offset) ||
+                        SeventhColumnOffsetKiller(this.position, offset)) {
                     break;
                 }
-                if(offset == 1 && destination%7 == 0){
+                if (offset == 1 && destination % 7 == 0) {
                     break;
-                }else if(offset == -1 && (destination+1)%7 == 0){
+                } else if (offset == -1 && (destination + 1) % 7 == 0) {
                     break;
                 }
                 if (BoardLogic.isValidSquareCoordinate(destination)) {
@@ -39,9 +35,8 @@ public class PlusPiece extends ChessPiece{
                         validMoves.add(destination);
                     } else if (gameBoard.getPiece(destination).getColor() != this.color) {
                         validMoves.add(destination);
-                        //BoardLogic.setTargetPiece(gameBoard.getPiece(destination), destination);
                         break;
-                    }else if (gameBoard.getPiece(destination).getColor() == this.color) {
+                    } else if (gameBoard.getPiece(destination).getColor() == this.color) {
                         break;
                     }
                 }
@@ -50,18 +45,18 @@ public class PlusPiece extends ChessPiece{
         return validMoves;
     };
 
-    //the invalid of offset of the pieces at the specific column
-    private static boolean FirstColumnOffsetKiller(int currentPosition, int PlusPieceOffset){
+    // the invalid of offset of the pieces at the specific column
+    private static boolean FirstColumnOffsetKiller(int currentPosition, int PlusPieceOffset) {
         return BoardLogic.FirstColumn[currentPosition] && (PlusPieceOffset == -1);
     }
 
-    private static boolean SeventhColumnOffsetKiller(int currentPosition, int PlusPieceOffset){
+    private static boolean SeventhColumnOffsetKiller(int currentPosition, int PlusPieceOffset) {
         return BoardLogic.SeventhColumn[currentPosition] && (PlusPieceOffset == 1);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString();
     }
-    
+
 }

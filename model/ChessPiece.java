@@ -7,18 +7,18 @@ public abstract class ChessPiece {
     protected PieceType pieceType;
     protected int position;
     protected boolean isCaptured;
-    //TODO: add a method to set the isEnd to true when the pointPiece reach the end of the board
-    //TODO: add a method to set the isCaptured to true when the pointPiece is captured
-    ChessPiece(PieceType pieceType, Color color,int position, boolean isCaptured) {
+
+    ChessPiece(PieceType pieceType, Color color, int position, boolean isCaptured) {
         this.pieceType = pieceType;
         this.position = position;
         this.color = color;
         this.isCaptured = isCaptured;
     }
 
-    public abstract ArrayList<Integer> ValidMoves(GameBoard gameBoard); //An arraylist of all the valid moves of the piece
+    public abstract ArrayList<Integer> ValidMoves(GameBoard gameBoard); // An arraylist of all the valid moves of the
+                                                                        // piece
 
-    //Setter
+    // Setter
     public void setPosition(int position) {
         this.position = position;
     }
@@ -26,8 +26,8 @@ public abstract class ChessPiece {
     public void setCaptured(boolean isCaptured) {
         this.isCaptured = isCaptured;
     }
-    
-    //Getter
+
+    // Getter
     public int getPosition() {
         return this.position;
     }
@@ -63,19 +63,19 @@ public abstract class ChessPiece {
             public boolean isSunPiece() {
                 return false;
             }
-        }, 
+        },
         HOURGLASS("H") {
             @Override
             public boolean isSunPiece() {
                 return false;
             }
-        }, 
+        },
         TIME("T") {
             @Override
             public boolean isSunPiece() {
                 return false;
             }
-        }, 
+        },
         SUN("S") {
             @Override
             public boolean isSunPiece() {
@@ -88,15 +88,15 @@ public abstract class ChessPiece {
                 return false;
             }
         };
-    
+
         private String pieceType;
-    
+
         PieceType(String pieceType) {
             this.pieceType = pieceType;
         }
 
         public abstract boolean isSunPiece();
-    
+
         @Override
         public String toString() {
             return this.pieceType;
