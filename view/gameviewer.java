@@ -55,10 +55,26 @@ public class gameviewer {
 
     public static void main(String[] args) {
         gameviewer gameView = new gameviewer();
-        
         gameView.gameBoard = new GameBoard(new GameBoard.BobTheBuilder());
+        
         gameView.displayGame(gameView.gameBoard, gameView.turnBruh);
-        boolean sunPieceCaptured = false;
+        gamecontroller.saveGame(gameView.gameBoard, gameView.turnBruh);
+        gamecontroller.loadGame();
+
+        //Options pane creation, unchanging throughout the game
+        JPanel options = new JPanel(); // panel for the game options
+            options.setBackground(Color.LIGHT_GRAY);
+            options.setPreferredSize(new Dimension(gameView.frame.getWidth(), 30));
+            JButton save = new JButton("Save Game");
+            JButton load = new JButton("Load Previous Game");
+            JButton quit = new JButton("Quit Game");
+    
+            quit.addActionListener(new WindowCloseButton());
+            options.add(save);
+            options.add(load);
+            options.add(quit);
+            gameView.frame.add(options, BorderLayout.NORTH);
+            boolean sunPieceCaptured = false;
         
         while (!gameView.gameBoard.isSunPieceCaptured()) {
             try {
@@ -143,7 +159,7 @@ public class gameviewer {
         });
     }
 
-    private JPanel createBoardPanel(HashMap<Integer, ChessPiece> piecePositions, Color boardColor1, Color boardColor2) {
+    private JPanel createBoardPanel(HashMap<Integer, ChessPiece> piecePositions, Color yellow, Color blue) {
         // Create a new panel with the chess board
         boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(6, 7));
@@ -216,9 +232,9 @@ public class gameviewer {
                 boardPanel.add(button);
             }
             if (i % 2 == 0) {
-                button.setBackground(boardColor1);
+                button.setBackground(yellow);
             } else {
-                button.setBackground(boardColor2);
+                button.setBackground(blue);
             }
         boardPanel.revalidate();
         boardPanel.repaint();
@@ -329,6 +345,43 @@ public class gameviewer {
             if (confirmation == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
+        }
+
+    }
+
+    public static class save {
+        private JFrame appFrame;
+
+        public void ActionListenerClass(JFrame frame) {
+            this.appFrame = frame;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            int confirmation = JOptionPane.showConfirmDialog(appFrame, 
+            "Save Ongoing Game?",
+            "saveGame" , JOptionPane.YES_NO_OPTION);
+        if (confirmation == JOptionPane.YES_OPTION) {
+            gamecontroller.saveGame(null, null);
+            System.exit(0);
+        }
+        }
+    }
+
+    public static class load {
+        private JFrame appFrame;
+
+        public void ActionListenerClass(JFrame frame) {
+            this.appFrame = frame;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            int confirmation = JOptionPane.showConfirmDialog(appFrame, 
+            "Load Previous Game?",
+            "loadGame" , JOptionPane.YES_NO_OPTION);
+        if (confirmation == JOptionPane.YES_OPTION) {
+            gamecontroller.loadGame();
+            System.exit(0);
+        }
         }
     }
 
