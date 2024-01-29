@@ -18,6 +18,7 @@ public class gamecontroller extends BoardLogic{
         BobTheBuilder builder = new BobTheBuilder();
         int initialPosition = piece.getPosition();
         HashMap<Integer, ChessPiece> prevPiecePosition = new HashMap<>();
+        System.out.println("can switch : " + canSwitch);
         prevPiecePosition = gamer.getAllPiecePosition();  //get the previous position of the piece
         for(int i = 0; i < BoardLogic.totalSquare; i++){
            if(prevPiecePosition.get(i) != null){    //check if the piece is not null

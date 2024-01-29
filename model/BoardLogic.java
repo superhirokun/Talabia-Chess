@@ -53,7 +53,7 @@ public class BoardLogic {
         return turn;
     }
 
-    public static void zaSwitcher(){
+    public static void zaSwitcher(int turn){
         if(turn%2 == 0){
             setCanSwitch(true);
         }else{
