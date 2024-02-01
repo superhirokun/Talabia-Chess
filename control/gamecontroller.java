@@ -255,24 +255,28 @@ public class gamecontroller extends BoardLogic {
 
     public static String loadGame(String fileName) {
         // file path
-        String filePath = (fileName != null && !fileName.isEmpty()) ? fileName : "saveFile.txt";
+        String filePath = (fileName != null && !fileName.isEmpty()) ? fileName : "saveFile.txt"; // making sure file
+                                                                                                 // exist and has
+                                                                                                 // content, otherwise
+                                                                                                 // default file name
+                                                                                                 // saveFile.txt
         String test = "-1";
 
         // FEN string reader
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String fenString = reader.readLine();
+            String fenString = reader.readLine(); // reads file and puts them as a string
 
             if (fenString != null) {
                 // decode the FEN string
                 System.out.println(fenString);
-                String[] decodedFEN = zaFENDecoder(fenString);
+                String[] decodedFEN = zaFENDecoder(fenString); // decoding the string and then put into array
                 test = Arrays.toString(decodedFEN);
                 return test;
             } else {
                 System.out.println("The file is empty.");
                 return test;
             }
-        } catch (IOException e) {
+        } catch (IOException e) { // catching errors
             e.printStackTrace();
             System.err.println("Error loading the game.");
             return test;
